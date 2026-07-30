@@ -2072,6 +2072,29 @@ function init() {
   document.getElementById('cta-sample').href = 'https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I\'d like to request a sample.');
   document.getElementById('cta-email').href = 'mailto:' + CONFIG.email;
 
+  // All mailto links: copy address to clipboard + flash confirmation.
+  // Covers visitors without a configured desktop mail client (webmail users),
+  // for whom mailto: silently does nothing.
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href^="mailto:"]');
+    if (!a) return;
+    var textNode = null;
+    for (var i = 0; i < a.childNodes.length; i++) {
+      if (a.childNodes[i].nodeType === 3 && a.childNodes[i].textContent.trim()) { textNode = a.childNodes[i]; break; }
+    }
+    var flash = function(msg) {
+      if (!textNode) return;
+      var orig = textNode.textContent;
+      textNode.textContent = ' ' + msg;
+      setTimeout(function() { textNode.textContent = orig; }, 2500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(CONFIG.email).then(function() { flash('Copied: ' + CONFIG.email); }, function() { flash(CONFIG.email); });
+    } else {
+      flash(CONFIG.email);
+    }
+  });
+
   // Button group clicks
   document.querySelectorAll('.btn-group').forEach(function(group) {
     group.addEventListener('click', function(e) {
