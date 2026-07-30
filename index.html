@@ -1,0 +1,2184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Finder — Network Security Hardware</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="description" content="Select your requirements and get matched with the best-fit network security hardware in 60 seconds.">
+<style>
+/* ============================================================
+   Design tokens
+   ============================================================ */
+:root {
+  --ink-950: #0A0D12;
+  --ink-900: #11161E;
+  --ink-800: #1A2230;
+  --ink-700: #263143;
+  --brand-600: #126666;
+  --brand-500: #1A7E7E;
+  --brand-400: #7FB8BB;
+  --cyan-400: #34C0BE;
+  --green-500: #12b76a;
+  --green-600: #0e9f5d;
+  --amber-400: #fbbf24;
+
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --line: #e3e9f2;
+  --line-strong: #cdd6e4;
+
+  --text: #0f172a;
+  --text-2: #45526b;
+  --text-3: #8593ab;
+
+  --grad-brand: linear-gradient(135deg, #126666 0%, #2FA8A0 100%);
+  --grad-text: linear-gradient(92deg, #9BE8DF 0%, #7FB8BB 45%, #B9E6E2 100%);
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 6px 16px -6px rgba(16, 24, 40, 0.12), 0 2px 4px -2px rgba(16, 24, 40, 0.06);
+  --shadow-lg: 0 24px 48px -16px rgba(16, 24, 40, 0.22), 0 8px 16px -8px rgba(16, 24, 40, 0.08);
+  --shadow-glow: 0 0 0 1px rgba(26, 126, 126, 0.25), 0 12px 40px -8px rgba(18, 102, 102, 0.45);
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "SF Mono", "JetBrains Mono", Consolas, "Courier New", monospace;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   Reset & base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+button { cursor: pointer; font-family: inherit; }
+a { color: var(--brand-500); text-decoration: none; }
+:focus-visible { outline: 2px solid var(--brand-500); outline-offset: 3px; border-radius: 4px; }
+::selection { background: rgba(26, 126, 126, 0.22); }
+
+.container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.hidden { display: none !important; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+/* ============================================================
+   Top navigation
+   ============================================================ */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  transition: background 0.35s, box-shadow 0.35s, backdrop-filter 0.35s;
+}
+.nav.scrolled {
+  background: rgba(10, 13, 18, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 32px -12px rgba(0, 0, 0, 0.5);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.brand { display: flex; align-items: center; gap: 11px; color: #fff; }
+.brand-logo {
+  display: inline-flex; align-items: center;
+  flex: none;
+}
+.brand-logo img { height: 26px; width: auto; display: block; }
+.brand-name { font-size: 15.5px; font-weight: 700; letter-spacing: -0.2px; }
+.brand-sub { font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.5); letter-spacing: 0.4px; text-transform: uppercase; margin-top: -2px; }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 18px;
+  font-size: 13.5px; font-weight: 600; color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 99px;
+  transition: all 0.25s var(--ease-out);
+}
+.nav-cta:hover { background: var(--grad-brand); border-color: transparent; transform: translateY(-1px); box-shadow: 0 8px 20px -6px rgba(18, 102, 102, 0.6); }
+.nav-cta svg { width: 15px; height: 15px; }
+@media (max-width: 640px) {
+  .brand > span:last-child { display: none; }  /* 窄屏只留 logo,防文字换行挤压 */
+  .nav-cta { padding: 8px 14px; font-size: 12.5px; white-space: nowrap; }
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero {
+  position: relative;
+  background: var(--ink-950);
+  color: #fff;
+  padding: 158px 0 108px;
+  overflow: hidden;
+}
+.hero-bg { position: absolute; inset: 0; pointer-events: none; }
+.hero-glow-1 {
+  position: absolute; width: 720px; height: 720px;
+  top: -320px; right: -180px;
+  background: radial-gradient(circle, rgba(18, 102, 102, 0.32) 0%, transparent 62%);
+}
+.hero-glow-2 {
+  position: absolute; width: 560px; height: 560px;
+  bottom: -300px; left: -160px;
+  background: radial-gradient(circle, rgba(47, 191, 168, 0.2) 0%, transparent 62%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 30%, transparent 78%);
+}
+.hero-inner { position: relative; text-align: center; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 7px 16px 7px 8px;
+  font-size: 12.5px; font-weight: 600; letter-spacing: 0.3px;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 99px;
+  margin-bottom: 30px;
+}
+.hero-eyebrow .pill-tag {
+  padding: 3px 10px; border-radius: 99px;
+  background: var(--grad-brand);
+  font-size: 11px; font-weight: 700; color: #fff;
+  letter-spacing: 0.5px; text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(34px, 5.4vw, 58px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.08;
+  max-width: 780px;
+  margin: 0 auto 22px;
+}
+.hero h1 .grad {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.hero-sub {
+  font-size: clamp(15.5px, 1.8vw, 18.5px);
+  color: rgba(255, 255, 255, 0.62);
+  max-width: 560px;
+  margin: 0 auto 40px;
+  font-weight: 400;
+}
+.hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 66px; }
+.btn-hero-primary {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 15px 32px;
+  font-size: 15.5px; font-weight: 650; color: #fff;
+  background: var(--grad-brand);
+  border: none; border-radius: 14px;
+  box-shadow: 0 10px 30px -8px rgba(18, 102, 102, 0.65);
+  transition: all 0.25s var(--ease-out);
+}
+.btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -8px rgba(18, 102, 102, 0.8); }
+.btn-hero-primary svg { width: 17px; height: 17px; transition: transform 0.25s var(--ease-out); }
+.btn-hero-primary:hover svg { transform: translateY(2px); }
+.btn-hero-ghost {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 15px 28px;
+  font-size: 15.5px; font-weight: 600; color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  transition: all 0.25s var(--ease-out);
+}
+.btn-hero-ghost:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3); }
+.btn-hero-ghost svg { width: 16px; height: 16px; }
+
+.hero-stats {
+  display: flex; justify-content: center; gap: 0;
+  max-width: 640px; margin: 0 auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  padding-top: 34px;
+}
+.stat { flex: 1; text-align: center; position: relative; }
+.stat + .stat::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 1px; height: 40px; background: rgba(255, 255, 255, 0.09);
+}
+.stat-num {
+  font-size: clamp(26px, 3.4vw, 34px); font-weight: 800; letter-spacing: -1px;
+  background: var(--grad-text);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label { font-size: 12px; font-weight: 500; color: rgba(255, 255, 255, 0.45); letter-spacing: 0.6px; text-transform: uppercase; margin-top: 2px; }
+
+/* ============================================================
+   Section scaffolding
+   ============================================================ */
+.section { padding: 76px 0 8px; }
+.section-head { text-align: center; margin-bottom: 40px; }
+.section-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--brand-500);
+  margin-bottom: 12px;
+}
+.section-kicker::before, .section-kicker::after {
+  content: ''; width: 22px; height: 1.5px; background: var(--brand-500); opacity: 0.5; border-radius: 2px;
+}
+.section-title {
+  font-size: clamp(24px, 3.2vw, 32px); font-weight: 800; letter-spacing: -1px; color: var(--text);
+}
+.section-desc { font-size: 15px; color: var(--text-3); margin-top: 8px; }
+
+/* ============================================================
+   Scenario cards
+   ============================================================ */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+.scenario-card {
+  position: relative;
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 0;
+  padding: 22px 18px 20px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  transition: all 0.3s var(--ease-out);
+  text-align: left;
+  overflow: hidden;
+}
+.scenario-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(18, 102, 102, 0.05), rgba(47, 191, 168, 0.03));
+  opacity: 0; transition: opacity 0.3s;
+}
+.scenario-card:hover {
+  border-color: var(--brand-400);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+.scenario-card:hover::after { opacity: 1; }
+.scenario-card.active {
+  border-color: var(--brand-500);
+  box-shadow: var(--shadow-glow);
+}
+.scenario-card.active::after { opacity: 1; }
+.scenario-icon {
+  width: 44px; height: 44px; border-radius: 13px;
+  display: grid; place-items: center;
+  background: linear-gradient(150deg, #EAF6F5, #E2F3F2);
+  border: 1px solid #D6EEEC;
+  margin-bottom: 14px;
+  transition: all 0.3s var(--ease-out);
+  position: relative; z-index: 1;
+}
+.scenario-card.active .scenario-icon { background: var(--grad-brand); border-color: transparent; }
+.scenario-icon svg { width: 22px; height: 22px; stroke: var(--brand-600); transition: stroke 0.3s; }
+.scenario-card.active .scenario-icon svg { stroke: #fff; }
+.scenario-title {
+  font-size: 14.5px; font-weight: 700; color: var(--text);
+  line-height: 1.32; letter-spacing: -0.2px;
+  position: relative; z-index: 1;
+}
+.scenario-desc {
+  font-size: 12px; color: var(--text-3); margin-top: 5px; line-height: 1.45;
+  position: relative; z-index: 1;
+}
+.scenario-check {
+  position: absolute; top: 14px; right: 14px; z-index: 1;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--grad-brand);
+  display: grid; place-items: center;
+  opacity: 0; transform: scale(0.5);
+  transition: all 0.3s var(--ease-out);
+}
+.scenario-card.active .scenario-check { opacity: 1; transform: scale(1); }
+.scenario-check svg { width: 12px; height: 12px; stroke: #fff; }
+
+/* ============================================================
+   Divider
+   ============================================================ */
+.divider {
+  display: flex; align-items: center; gap: 18px;
+  padding: 58px 0 0;
+  color: var(--text-3); font-size: 12.5px; font-weight: 600;
+  letter-spacing: 1.4px; text-transform: uppercase;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-strong));
+}
+.divider::after { background: linear-gradient(90deg, var(--line-strong), transparent); }
+
+/* ============================================================
+   Filter panel
+   ============================================================ */
+.filter-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-md);
+  padding: 34px 36px 26px;
+  position: relative;
+  overflow: hidden;
+}
+.filter-panel::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--grad-brand);
+}
+.filter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px 40px;
+}
+.filter-group { display: flex; flex-direction: column; gap: 10px; }
+.filter-group.full-width { grid-column: 1 / -1; }
+.filter-label {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12.5px; font-weight: 700; color: var(--text-2);
+  letter-spacing: 0.4px; text-transform: uppercase;
+}
+.filter-label svg { width: 15px; height: 15px; stroke: var(--text-3); }
+
+/* Segmented control */
+.btn-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  width: fit-content;
+}
+.btn-group .btn-opt {
+  padding: 8px 15px;
+  min-height: 40px;
+  font-size: 13px; font-weight: 600;
+  background: transparent;
+  color: var(--text-2);
+  border: none;
+  border-radius: 9px;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.btn-group .btn-opt:hover { color: var(--text); background: rgba(255, 255, 255, 0.7); }
+.btn-group .btn-opt.active {
+  background: var(--ink-900);
+  color: #fff;
+  box-shadow: 0 3px 10px -2px rgba(16, 21, 28, 0.4);
+}
+
+/* Toggle switch */
+.toggle-row { display: flex; gap: 26px; align-items: center; flex-wrap: wrap; }
+.toggle-wrap {
+  display: inline-flex; align-items: center; gap: 10px;
+  cursor: pointer; user-select: none;
+  padding: 6px 0;
+}
+.toggle { position: relative; display: inline-block; width: 46px; height: 26px; flex: none; }
+.toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-slider {
+  position: absolute; inset: 0;
+  background: #d5dde9;
+  border-radius: 99px;
+  transition: background 0.25s var(--ease-out);
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 20px; width: 20px;
+  left: 3px; top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(16, 24, 40, 0.25);
+  transition: transform 0.25s var(--ease-out);
+}
+.toggle input:checked + .toggle-slider { background: var(--grad-brand); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+.toggle input:focus-visible + .toggle-slider { outline: 2px solid var(--brand-500); outline-offset: 3px; }
+.toggle-text { font-size: 13.5px; font-weight: 550; color: var(--text-2); }
+
+/* Optical sub-group */
+.optical-sub { display: flex; flex-direction: column; gap: 8px; }
+.optical-sub-label {
+  font-size: 11px; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: 0.6px;
+}
+.optical-row {
+  display: flex; gap: 36px; align-items: flex-start; flex-wrap: wrap;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 18px 22px;
+  border-radius: var(--r-md);
+}
+
+/* Filter footer: live counter + actions */
+.filter-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; flex-wrap: wrap;
+  margin-top: 30px; padding-top: 24px;
+  border-top: 1px dashed var(--line-strong);
+}
+.match-counter {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 13.5px; color: var(--text-2); font-weight: 550;
+}
+.match-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--green-500);
+  box-shadow: 0 0 0 4px rgba(18, 183, 106, 0.18);
+  transition: background 0.3s, box-shadow 0.3s;
+  flex: none;
+}
+.match-dot.empty { background: #f04438; box-shadow: 0 0 0 4px rgba(240, 68, 56, 0.15); }
+.match-dot.idle { background: var(--text-3); box-shadow: 0 0 0 4px rgba(133, 147, 171, 0.15); }
+.match-counter strong {
+  font-size: 17px; font-weight: 800; color: var(--text);
+  font-variant-numeric: tabular-nums;
+  min-width: 22px; display: inline-block; text-align: center;
+}
+.filter-actions { display: flex; gap: 12px; align-items: center; }
+.btn-reset {
+  padding: 11px 18px;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-3);
+  background: transparent;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  transition: all 0.2s var(--ease-out);
+}
+.btn-reset:hover { color: var(--text-2); border-color: var(--line-strong); background: var(--bg); }
+.btn-show {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 30px;
+  font-size: 14.5px; font-weight: 700; color: #fff;
+  background: var(--grad-brand);
+  border: none; border-radius: 12px;
+  box-shadow: 0 8px 22px -6px rgba(18, 102, 102, 0.55);
+  transition: all 0.25s var(--ease-out);
+}
+.btn-show:hover { transform: translateY(-1px); box-shadow: 0 12px 30px -6px rgba(18, 102, 102, 0.7); }
+.btn-show svg { width: 16px; height: 16px; }
+.filter-hint {
+  margin-top: 14px;
+  padding: 11px 16px;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: var(--r-md);
+  color: #b42318;
+  font-size: 13px; font-weight: 550;
+  text-align: center;
+  animation: fadeSlideIn 0.25s var(--ease-out);
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Results
+   ============================================================ */
+.results-section { padding: 70px 0 10px; scroll-margin-top: 84px; }
+.results-head { margin-bottom: 22px; }
+.results-title { font-size: clamp(21px, 2.6vw, 26px); font-weight: 800; letter-spacing: -0.6px; }
+.results-sub { font-size: 14px; color: var(--text-3); margin-top: 4px; }
+
+.req-summary {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 22px;
+}
+.req-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 13px;
+  font-size: 12.5px; font-weight: 600;
+  color: var(--ink-700);
+  background: #EAF6F5;
+  border: 1px solid #D6EEEC;
+  border-radius: 99px;
+}
+.req-chip svg { width: 13px; height: 13px; stroke: var(--brand-500); }
+
+.degrade-notice {
+  display: flex; gap: 11px; align-items: flex-start;
+  padding: 14px 18px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: var(--r-md);
+  color: #92400e;
+  font-size: 13.5px;
+  margin-bottom: 22px;
+  line-height: 1.55;
+}
+.degrade-notice svg { width: 17px; height: 17px; flex: none; margin-top: 2px; stroke: #d97706; }
+
+/* Product cards */
+.result-list { display: flex; flex-direction: column; gap: 18px; }
+.product-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow 0.3s var(--ease-out), transform 0.3s var(--ease-out), border-color 0.3s;
+  animation: cardIn 0.55s var(--ease-out) both;
+}
+.product-card:nth-child(2) { animation-delay: 0.08s; }
+.product-card:nth-child(3) { animation-delay: 0.16s; }
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.product-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.product-card.recommended { border: 1.5px solid transparent; background: linear-gradient(var(--card), var(--card)) padding-box, var(--grad-brand) border-box; box-shadow: var(--shadow-glow); }
+
+.card-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  padding: 22px 26px 0;
+}
+.card-id { display: flex; flex-direction: column; gap: 3px; }
+.card-model {
+  font-size: 21px; font-weight: 800; color: var(--text);
+  letter-spacing: -0.5px; font-family: var(--mono);
+}
+.card-desc { font-size: 13px; color: var(--text-3); max-width: 520px; line-height: 1.5; }
+.card-right { display: flex; align-items: center; gap: 12px; }
+.card-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 13px;
+  font-size: 11.5px; font-weight: 700;
+  border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.6px;
+}
+.card-badge svg { width: 13px; height: 13px; }
+.badge-recommended { background: var(--grad-brand); color: #fff; box-shadow: 0 4px 12px -3px rgba(18, 102, 102, 0.5); }
+.badge-alternative { background: #EAF6F5; color: var(--brand-600); border: 1px solid #D6EEEC; }
+.badge-match { background: #f0fdf4; color: var(--green-600); border: 1px solid #bbf7d0; }
+
+.score-ring { position: relative; width: 58px; height: 58px; flex: none; }
+.score-ring svg { transform: rotate(-90deg); }
+.score-ring .ring-bg { stroke: var(--line); }
+.score-ring .ring-val { stroke: url(#ringGrad); stroke-linecap: round; transition: stroke-dashoffset 1s var(--ease-out); }
+.score-ring .ring-num {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-size: 15px; font-weight: 800; color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.score-ring .ring-num small { font-size: 9px; color: var(--text-3); font-weight: 600; margin-left: 1px; }
+
+/* Spec grid */
+.card-specs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 28px;
+  padding: 16px 26px 6px;
+}
+.spec-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.spec-item:nth-last-child(-n+3) { border-bottom: none; }
+.spec-icon {
+  width: 30px; height: 30px; border-radius: 9px; flex: none;
+  display: grid; place-items: center;
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+.spec-icon svg { width: 15px; height: 15px; stroke: var(--text-3); }
+.spec-body { display: flex; flex-direction: column; min-width: 0; }
+.spec-label { font-size: 10.5px; font-weight: 650; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.6px; }
+.spec-value { font-size: 13.5px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.spec-value.pos { color: var(--green-600); }
+.spec-value.neg { color: var(--text-3); font-weight: 500; }
+
+.card-reason {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin: 14px 26px 0;
+  padding: 13px 17px;
+  background: linear-gradient(120deg, #F2FAF9, #F0F8F7);
+  border: 1px solid #E7F5F4;
+  border-radius: var(--r-md);
+  font-size: 13.5px; color: var(--text-2);
+  line-height: 1.55;
+}
+.card-reason svg { width: 16px; height: 16px; flex: none; margin-top: 2px; stroke: var(--brand-500); }
+.card-reason strong { color: var(--text); }
+
+.card-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  padding: 16px 26px 20px;
+}
+.card-note { font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 6px; }
+.card-note svg { width: 13px; height: 13px; stroke: var(--text-3); flex: none; }
+.card-contact { display: flex; gap: 8px; flex-wrap: wrap; }
+.contact-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  font-size: 12.5px; font-weight: 650;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text-2);
+  transition: all 0.2s var(--ease-out);
+  text-decoration: none;
+  cursor: pointer;
+}
+.contact-btn svg { width: 14px; height: 14px; }
+.contact-btn:hover { border-color: var(--brand-400); color: var(--brand-600); background: #F6FBFB; text-decoration: none; transform: translateY(-1px); }
+.contact-btn.primary {
+  background: var(--ink-900);
+  color: #fff;
+  border-color: var(--ink-900);
+}
+.contact-btn.primary:hover { background: var(--ink-700); border-color: var(--ink-700); color: #fff; }
+.contact-btn.copied { background: var(--green-500); color: #fff; border-color: var(--green-500); }
+
+/* No match */
+.no-match {
+  text-align: center;
+  padding: 44px 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+}
+.no-match-icon {
+  width: 62px; height: 62px; margin: 0 auto 18px;
+  border-radius: 18px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  display: grid; place-items: center;
+}
+.no-match-icon svg { width: 30px; height: 30px; stroke: #ea580c; }
+.no-match h3 { font-size: 19px; font-weight: 750; color: var(--text); margin-bottom: 8px; letter-spacing: -0.3px; }
+.no-match p { color: var(--text-2); font-size: 14px; max-width: 460px; margin: 0 auto 20px; }
+.no-match .contact-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+.similar-head { margin: 30px 0 14px; }
+.similar-title { font-size: 16px; font-weight: 750; color: var(--text); letter-spacing: -0.2px; }
+.similar-sub { font-size: 13px; color: var(--text-3); margin-top: 2px; }
+
+.match-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.match-bar { width: 74px; height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.match-bar-fill { height: 100%; border-radius: 99px; background: var(--grad-brand); }
+.match-pct { font-size: 12.5px; font-weight: 750; color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer {
+  position: relative;
+  background: var(--ink-950);
+  color: #fff;
+  padding: 84px 0 36px;
+  margin-top: 84px;
+  overflow: hidden;
+}
+.footer-glow {
+  position: absolute; width: 640px; height: 640px;
+  top: -300px; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(18, 102, 102, 0.22) 0%, transparent 62%);
+  pointer-events: none;
+}
+.footer-inner { position: relative; }
+.footer-cta { text-align: center; margin-bottom: 54px; }
+.footer-cta h2 {
+  font-size: clamp(24px, 3.4vw, 34px); font-weight: 800; letter-spacing: -1px; margin-bottom: 12px;
+}
+.footer-cta h2 .grad {
+  background: var(--grad-text);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.footer-cta p { color: rgba(255, 255, 255, 0.55); font-size: 15px; max-width: 480px; margin: 0 auto 30px; }
+.footer-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.footer-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px;
+  font-size: 14px; font-weight: 650;
+  border-radius: 13px;
+  border: 1.5px solid transparent;
+  transition: all 0.25s var(--ease-out);
+  text-decoration: none;
+}
+.footer-btn svg { width: 16px; height: 16px; }
+.footer-btn:hover { text-decoration: none; transform: translateY(-2px); }
+.footer-btn-primary { background: #126666; color: #fff; box-shadow: 0 10px 26px -8px rgba(18, 102, 102, 0.6); }
+.footer-btn-primary:hover { background: #0F5454; box-shadow: 0 14px 34px -8px rgba(18, 102, 102, 0.8); }
+.footer-btn-outline {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.88);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.footer-btn-outline:hover { border-color: rgba(255, 255, 255, 0.45); background: rgba(255, 255, 255, 0.1); }
+
+.footer-legal {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 26px;
+  display: flex; justify-content: center; align-items: center;
+  gap: 14px; flex-wrap: wrap;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1.8;
+  text-align: center;
+}
+.footer-legal .legal-right { display: flex; align-items: center; gap: 10px; }
+.footer-legal .legal-linkedin { display: inline-flex; opacity: 0.55; transition: opacity 0.2s; }
+.footer-legal .legal-linkedin:hover { opacity: 1; }
+.footer-legal .legal-linkedin svg { width: 15px; height: 15px; fill: rgba(255, 255, 255, 0.85); }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 900px) {
+  .scenario-grid { grid-template-columns: repeat(3, 1fr); }
+  .card-specs { grid-template-columns: repeat(2, 1fr); }
+  .spec-item:nth-last-child(-n+3) { border-bottom: 1px dashed var(--line); }
+  .spec-item:nth-last-child(-n+2) { border-bottom: none; }
+}
+@media (max-width: 768px) {
+  .hero { padding: 128px 0 84px; }
+  .hero h1 { letter-spacing: -1.2px; }
+  .filter-panel { padding: 24px 20px 20px; border-radius: var(--r-lg); }
+  .filter-grid { grid-template-columns: 1fr; gap: 20px; }
+  .filter-footer { flex-direction: column; align-items: stretch; }
+  .filter-actions { flex-direction: column-reverse; }
+  .btn-show, .btn-reset { width: 100%; justify-content: center; }
+  .match-counter { justify-content: center; }
+  .card-specs { grid-template-columns: 1fr; }
+  .spec-item:nth-last-child(-n+2) { border-bottom: 1px dashed var(--line); }
+  .spec-item:last-child { border-bottom: none; }
+  .card-foot { flex-direction: column; align-items: stretch; }
+  .card-contact { flex-direction: column; }
+  .contact-btn { justify-content: center; }
+  .footer-buttons { flex-direction: column; align-items: center; }
+  .footer-btn { width: 100%; max-width: 320px; justify-content: center; }
+  .footer-legal { flex-direction: column; text-align: center; }
+}
+@media (max-width: 560px) {
+  .container { padding: 0 18px; }
+  .scenario-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .scenario-card { padding: 16px 14px; }
+  .hero-stats { flex-direction: column; gap: 18px; }
+  .stat + .stat::before { display: none; }
+  .card-top { padding: 18px 18px 0; }
+  .card-specs, .card-foot { padding-left: 18px; padding-right: 18px; }
+  .card-reason { margin: 12px 18px 0; }
+  .card-model { font-size: 18px; }
+  .optical-row { flex-direction: column; gap: 18px; padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SVG icon defs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#126666"/>
+      <stop offset="100%" stop-color="#2FA8A0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <span class="brand-logo"><img src="data:image/png;base64,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" alt="MAITUO"></span>
+      <span>
+        <div class="brand-name">Product Finder</div>
+        <div class="brand-sub">Network Security Hardware</div>
+      </span>
+    </div>
+    <a class="nav-cta" id="nav-cta" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Get a Quote
+    </a>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="hero-bg">
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="container hero-inner">
+    <div class="hero-eyebrow reveal">
+      <span class="pill-tag">New</span>
+      Network Security Hardware · OEM/ODM Ready
+    </div>
+    <h1 class="reveal">Find the Right Hardware<br><span class="grad">in 60 Seconds</span></h1>
+    <p class="hero-sub reveal">Tell us your requirements — get matched with the best-fit network appliance from our full product line, instantly.</p>
+    <div class="hero-actions reveal">
+      <a class="btn-hero-primary" href="#section-scenarios">
+        Start Selecting
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>
+      </a>
+      <a class="btn-hero-ghost" id="hero-wa" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Talk to an Engineer
+      </a>
+    </div>
+    <div class="hero-stats reveal">
+      <div class="stat">
+        <div class="stat-num" data-count="__PRODUCT_COUNT__">0</div>
+        <div class="stat-label">Models in Lineup</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-count="60" data-suffix="s">0</div>
+        <div class="stat-label">To a Shortlist</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-count="24" data-prefix="&lt;" data-suffix="h">0</div>
+        <div class="stat-label">Engineer Response</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ===== Scenarios ===== -->
+  <section class="section" id="section-scenarios">
+    <div class="section-head reveal">
+      <div class="section-kicker">Step 1 · Scenarios</div>
+      <h2 class="section-title">Start with your use case</h2>
+      <p class="section-desc">One click loads a proven configuration — then fine-tune below if needed.</p>
+    </div>
+    <div class="scenario-grid reveal">
+      <button class="scenario-card" data-scenario="network-security" aria-pressed="false">
+        <span class="scenario-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <span class="scenario-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <span class="scenario-title">Network Security / Firewall</span>
+        <span class="scenario-desc">6+ ports · Bypass · 1G</span>
+      </button>
+      <button class="scenario-card" data-scenario="sd-wan" aria-pressed="false">
+        <span class="scenario-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <span class="scenario-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+        <span class="scenario-title">SD-WAN / Branch Office</span>
+        <span class="scenario-desc">4+ ports · ARM · 4G/5G</span>
+      </button>
+      <button class="scenario-card" data-scenario="enterprise" aria-pressed="false">
+        <span class="scenario-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <span class="scenario-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></span>
+        <span class="scenario-title">Enterprise Gateway</span>
+        <span class="scenario-desc">8+ ports · x86 · 1U rack</span>
+      </button>
+      <button class="scenario-card" data-scenario="edge" aria-pressed="false">
+        <span class="scenario-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <span class="scenario-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></span>
+        <span class="scenario-title">Edge Computing / IoT</span>
+        <span class="scenario-desc">4+ ports · ARM · Fanless</span>
+      </button>
+      <button class="scenario-card" data-scenario="custom" aria-pressed="false">
+        <span class="scenario-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <span class="scenario-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        <span class="scenario-title">Custom / OEM Project</span>
+        <span class="scenario-desc">Tell us what you need</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== Divider ===== -->
+  <div class="divider"><span>or specify requirements</span></div>
+
+  <!-- ===== Filters ===== -->
+  <section class="section" id="section-filters">
+    <div class="section-head reveal">
+      <div class="section-kicker">Step 2 · Requirements</div>
+      <h2 class="section-title">Fine-tune your specs</h2>
+    </div>
+    <div class="filter-panel reveal">
+      <div class="filter-grid">
+
+        <div class="filter-group">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 17.5h.01M10 17.5h.01M14 17.5h.01M18 17.5h.01"/></svg>LAN Ports</span>
+          <div class="btn-group" data-filter="lan">
+            <button class="btn-opt" data-value="4">4</button>
+            <button class="btn-opt" data-value="6">6</button>
+            <button class="btn-opt" data-value="8">8</button>
+            <button class="btn-opt" data-value="10">10+</button>
+            <button class="btn-opt active" data-value="">Any</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>LAN Speed</span>
+          <div class="btn-group" data-filter="lan_speed">
+            <button class="btn-opt" data-value="1G">1G</button>
+            <button class="btn-opt" data-value="2.5G">2.5G</button>
+            <button class="btn-opt active" data-value="">Any</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>Platform</span>
+          <div class="btn-group" data-filter="platform">
+            <button class="btn-opt" data-value="arm">ARM</button>
+            <button class="btn-opt" data-value="x86">x86</button>
+            <button class="btn-opt active" data-value="">Any</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h.01M18 12h.01"/></svg>Form Factor</span>
+          <div class="btn-group" data-filter="form_factor">
+            <button class="btn-opt" data-value="desktop">Desktop</button>
+            <button class="btn-opt" data-value="1u_rack">1U Rack</button>
+            <button class="btn-opt" data-value="2u_rack">2U Rack</button>
+            <button class="btn-opt" data-value="fanless">Fanless</button>
+            <button class="btn-opt active" data-value="">Any</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>CPU Tier</span>
+          <div class="btn-group" data-filter="cpu_tier">
+            <button class="btn-opt" data-value="entry">Entry</button>
+            <button class="btn-opt" data-value="mid">Mid</button>
+            <button class="btn-opt" data-value="high">High</button>
+            <button class="btn-opt" data-value="server">Server</button>
+            <button class="btn-opt active" data-value="">Any</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 11v2M11 11v2M15 11v2M7 21h10"/></svg>RAM Type</span>
+          <div class="btn-group" data-filter="ram_type">
+            <button class="btn-opt" data-value="DDR4">DDR4</button>
+            <button class="btn-opt" data-value="DDR5">DDR5</button>
+            <button class="btn-opt" data-value="LPDDR4">LPDDR4</button>
+            <button class="btn-opt active" data-value="">Any</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>Bypass</span>
+          <div class="toggle-row">
+            <label class="toggle-wrap">
+              <span class="toggle">
+                <input type="checkbox" id="bypass-toggle">
+                <span class="toggle-slider"></span>
+              </span>
+              <span class="toggle-text">Required</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></svg>Connectivity</span>
+          <div class="toggle-row">
+            <label class="toggle-wrap">
+              <span class="toggle">
+                <input type="checkbox" id="cellular-toggle">
+                <span class="toggle-slider"></span>
+              </span>
+              <span class="toggle-text">4G/5G</span>
+            </label>
+            <label class="toggle-wrap">
+              <span class="toggle">
+                <input type="checkbox" id="wifi-toggle">
+                <span class="toggle-slider"></span>
+              </span>
+              <span class="toggle-text">WiFi</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group full-width">
+          <span class="filter-label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M4.9 19.1l2.2-2.2M16.9 7.1l2.2-2.2"/></svg>Optical Ports</span>
+          <div class="optical-row">
+            <div class="optical-sub">
+              <span class="optical-sub-label">Type</span>
+              <div class="btn-group" data-filter="sfp_type">
+                <button class="btn-opt" data-value="sfp">SFP</button>
+                <button class="btn-opt" data-value="sfp_plus">SFP+</button>
+                <button class="btn-opt active" data-value="">Any</button>
+              </div>
+            </div>
+            <div class="optical-sub">
+              <span class="optical-sub-label">Min. Count</span>
+              <div class="btn-group" data-filter="sfp_count">
+                <button class="btn-opt" data-value="2">2</button>
+                <button class="btn-opt" data-value="4">4+</button>
+                <button class="btn-opt" data-value="8">8+</button>
+                <button class="btn-opt active" data-value="">Any</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="filter-footer">
+        <div class="match-counter" id="match-counter">
+          <span class="match-dot idle" id="match-dot"></span>
+          <span><strong id="match-count">–</strong> <span id="match-label">models in lineup — set your requirements</span></span>
+        </div>
+        <div class="filter-actions">
+          <button class="btn-reset" id="btn-reset" type="button">Reset All</button>
+          <button class="btn-show" id="btn-show" type="button">
+            Show Matching Products
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="filter-hint" class="filter-hint hidden"></div>
+    </div>
+  </section>
+
+  <!-- ===== Results ===== -->
+  <section class="results-section hidden" id="section-results">
+    <div class="results-head">
+      <h2 class="results-title" id="results-title">Your Matches</h2>
+      <p class="results-sub" id="results-sub"></p>
+    </div>
+    <div class="req-summary" id="req-summary"></div>
+    <div id="degrade-notice" class="degrade-notice hidden"></div>
+    <div id="results-container" class="result-list"></div>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="footer-glow"></div>
+  <div class="container footer-inner">
+    <div class="footer-cta reveal">
+      <h2>Ready to discuss <span class="grad">your project?</span></h2>
+      <p>Standard models ship fast. Custom configurations, OEM branding and ODM projects welcome.</p>
+      <div class="footer-buttons">
+        <a href="#" class="footer-btn footer-btn-primary" id="cta-custom" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Discuss Custom Requirements
+        </a>
+        <a href="#" class="footer-btn footer-btn-outline" id="cta-sample" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7l8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          Request Sample
+        </a>
+        <a href="#" class="footer-btn footer-btn-outline" id="cta-email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+          Email Us
+        </a>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span class="legal-right">
+        <a href="#" class="legal-linkedin" id="footer-linkedin" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+        <span>&copy; <span id="current-year"></span> Ethan Su · Shenzhen MAITUO Technology Co., Ltd. · Specifications for reference only — confirm before ordering.</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== JavaScript ===== -->
+<script>
+const PRODUCTS = [{"model":"NSC-1107","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 5x 1G LAN, 2x Combo, 2 Bypass groups (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":5,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-1303","platform":"arm","cpu":"CORTINA CA8299","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 6x 2.5G LAN, 1 Bypass group (optional), 2x SFP+","ram_type":"LPDDR5","ram_max_gb":8,"storage":[{"type":"emmc","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"2.5G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":2,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":null,"npu_tops":null,"expansion":[],"form_factor":"desktop","dimensions_mm":{"w":270.0,"d":170.0,"h":44.0},"power_w":16.22,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"cortina","cpu_family":"CA8299","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-1403","platform":"arm","cpu":"CORTINA CA8299","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 6x 2.5G LAN, 1 Bypass group (optional), 2x SFP+, 2x 4G/5G, 1x WiFi","ram_type":"LPDDR5","ram_max_gb":8,"storage":[{"type":"emmc","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"2.5G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":2,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":270.0,"d":170.0,"h":44.0},"power_w":16.22,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"cortina","cpu_family":"CA8299","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-2106","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 3x 1G LAN, 1x 4G/5G","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"emmc","count":1},{"type":"tf","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":3,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"desktop","dimensions_mm":{"w":210.0,"d":140.0,"h":30.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":false},{"model":"NSC-2111","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 5x 1G LAN, 2 Bypass groups (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":5,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-2133","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 5x 1G LAN, 2 Bypass groups (optional), 1x 4G/5G","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":5,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"desktop","dimensions_mm":{"w":220.0,"d":140.0,"h":36.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-2153","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 4x 1G LAN, 1 Bypass group (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":4,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":220.0,"d":140.0,"h":36.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-25A3","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 5x 1G LAN, 2 Bypass groups (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":5,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":300.0,"d":166.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-2803","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 3x mixed, 1 Bypass group (optional), 2x 4G/5G","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":3,"type":"RJ45","speed":"1G/2.5G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"desktop","dimensions_mm":{"w":264.0,"d":139.0,"h":36.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-2821","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 3x mixed, 1 Bypass group (optional), 2x 4G/5G","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":3,"type":"RJ45","speed":"1G/2.5G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-2901","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 5x 1G LAN, 2 Bypass groups (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":5,"type":"RJ45","speed":"1G"},"combo":{"count":1,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":true,"combo_count":1,"has_bypass":true,"redundant_optional":true},{"model":"NSC-2903","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 5x 1G LAN, 2 Bypass groups (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":5,"type":"RJ45","speed":"1G"},"combo":{"count":1,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":210.0,"d":140.0,"h":30.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":1,"has_bypass":true},{"model":"NSC-2A03","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 3x 1G LAN, 1 Bypass group (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":3,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":258.0,"d":140.0,"h":40.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-2A11","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 3x 1G LAN, 1 Bypass group (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":3,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-2C01","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 8x 1G LAN, 4 Bypass groups (optional), 2x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":8,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":4,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":true,"combo_count":2,"has_bypass":true,"redundant_optional":true},{"model":"NSC-2C03","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 8x 1G LAN, 4 Bypass groups (optional), 2x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":8,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":4,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":280.0,"d":180.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-2E01","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 4x 1G LAN, 2 Bypass groups (optional), 2x 4G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":4,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":true,"combo_count":2,"has_bypass":true,"redundant_optional":true},{"model":"NSC-2E03","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 4x 1G LAN, 1 Bypass group (optional), 2x 4G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":4,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":230.0,"d":160.0,"h":40.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-2H01","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 8x 1G LAN, 2 Bypass groups (optional), 2x SFP","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":8,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":{"count":2,"type":"SFP","speed":"1G"},"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-2H12","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 8x 1G LAN, 2 Bypass groups (optional), 2x SFP","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":2},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":8,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":{"count":2,"type":"SFP","speed":"1G"},"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[],"form_factor":"2u_rack","dimensions_mm":{"w":430.0,"d":450.0,"h":88.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true,"redundant_optional":true},{"model":"NSC-2K03","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 4x 1G LAN, 2x 4G/5G, 1x WiFi","ram_type":"LPDDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":4,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":180.0,"d":104.0,"h":34.0},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":false},{"model":"NSC-2KA5","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 4x 1G LAN, 2x 4G/5G, 1x WiFi","ram_type":"LPDDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":4,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"fanless","dimensions_mm":{"w":210,"d":111.5,"h":41},"power_w":10.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":false},{"model":"NSC-2L01","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 2x 1G LAN, 1x 4G/5G","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false,"redundant_optional":true},{"model":"NSC-2L03","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 2x 1G LAN, 1x 4G/5G","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"desktop","dimensions_mm":{"w":270.0,"d":150.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":false},{"model":"NSC-2N01","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 10x 1G LAN, 4 Bypass groups (optional), 8x SFP, 4x SFP+, 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":10,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":{"count":8,"type":"SFP","speed":"1G"},"sfp_plus":{"count":4,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":4,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":15.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-2TA3","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 5x 1G LAN, 2 Bypass groups (optional), 1x 4G/5G","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":5,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"desktop","dimensions_mm":{"w":300.0,"d":166.0,"h":44.0},"power_w":12.0,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-2UA5","platform":"arm","cpu":"Rockchip RK3568","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 3x mixed ports","ram_type":"DDR4","ram_max_gb":8,"storage":[{"type":"emmc","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":3,"type":"RJ45","speed":"1G/2.5G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":null,"npu_tops":1.0,"expansion":[],"form_factor":"fanless","dimensions_mm":{"w":118.0,"d":118.0,"h":30.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"rockchip","cpu_family":"RK3568","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":false},{"model":"NSC-4AA3","platform":"arm","cpu":"MediaTek MT7981B ARM A53 Dual-Core","cpu_cores":2,"cpu_freq_ghz":1.3,"description":"ARM platform, 4x 1G LAN, 2 Bypass groups (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":1,"storage":[{"type":"emmc","count":1}],"ports":{"lan":{"count":4,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":140.0,"d":95.0,"h":36.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"mediatek","cpu_family":"MT7981","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-5012","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x mixed LAN, 3 Bypass groups (optional), 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G/2.5G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":310.0,"d":203.0,"h":44.0},"power_w":35.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-5013","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x mixed LAN, 3 Bypass groups (optional), 1x NIC slot, 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G/2.5G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":360.0,"h":44.0},"power_w":35.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-5016","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 8x 1G LAN, 3 Bypass groups (optional), 2x SFP, 2x SFP+, 1x NIC slot, 1x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":8,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":{"count":2,"type":"SFP","speed":"1G"},"sfp_plus":{"count":2,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":450.0,"h":44.0},"power_w":40.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true,"redundant_optional":true},{"model":"NSC-5101","platform":"x86","cpu":"Hygon C86-4G Series CPU, default Hygon 3490","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 4x NIC slots","ram_type":"DDR5","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":null,"nic_expansion":4,"npu_tops":null,"expansion":[{"type":"NIC Module","count":4,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":557.0,"h":44.5},"power_w":140.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"hygon","cpu_family":"C86","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-5102","platform":"x86","cpu":"Hygon C86-4G Series CPU, default Hygon 3490","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 4x NIC slots","ram_type":"DDR5","ram_max_gb":128,"storage":[{"type":"sata","count":3},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":null,"nic_expansion":4,"npu_tops":null,"expansion":[{"type":"NIC Module","count":4,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":440.0,"d":557.0,"h":88.0},"power_w":140.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"hygon","cpu_family":"C86","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-52AA","platform":"x86","cpu":"Hygon C86-4G Series CPU, default Hygon 3490","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 1x 1G LAN, 48x SFP+","ram_type":"DDR5","ram_max_gb":128,"storage":[{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":1,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":44,"type":"SFP+","speed":"10G","note":", 4x SFP28(25G)"}},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":null,"npu_tops":null,"expansion":[],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":560.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"hygon","cpu_family":"C86","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-53A2","platform":"x86","cpu":"Hygon C86-4G Series CPU, default Hygon 3450E","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 4x NIC slots, 1x WiFi","ram_type":"DDR5","ram_max_gb":128,"storage":[{"type":"sata","count":3},{"type":"msata","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":{"count":1},"nic_expansion":4,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":4,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":0,"d":0,"h":0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"hygon","cpu_family":"C86","cpu_tier":"mid","lifecycle":"eol","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-53AA","platform":"x86","cpu":"Hygon C86 1500 Series CPU","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform (Hygon C86 1500), 8x 1G LAN, 8x SFP, 4x SFP+, 4 Bypass groups (optional), 1x NIC slot","ram_type":"DDR5","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":8,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":{"count":8,"type":"SFP","speed":"1G"},"sfp_plus":{"count":4,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":4,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"hygon","cpu_family":"C86 1500","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true,"redundant_optional":true},{"model":"NSC-54A3","platform":"x86","cpu":"Hygon C86 1500 Series CPU","cpu_cores":0,"cpu_freq_ghz":null,"description":"x86 platform, 6x 1G LAN, 3 Bypass groups (optional), 1x 4G/5G","ram_type":"DDR5","ram_max_gb":0,"storage":[{"type":"tf","count":1},{"type":"emmc","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"desktop","dimensions_mm":{"w":310.0,"d":200.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"hygon","cpu_family":"C86","cpu_tier":"mid","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-55AA","platform":"x86","cpu":"Hygon C86-4G Series CPU, default Hygon 3450E","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 24x SFP+, 1x NIC slot","ram_type":"DDR5","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":null,"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":24,"type":"SFP+","speed":"10G"}},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":450.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"hygon","cpu_family":"C86","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-6025","platform":"x86","cpu":"Supports 6th-9th Gen Intel® Xeon E3/Core/Pentium/Celeron","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 4x NIC slots","ram_type":"DDR4","ram_max_gb":64,"storage":[{"type":"sata","count":4},{"type":"msata","count":1},{"type":"tf","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":null,"nic_expansion":4,"npu_tops":null,"expansion":[{"type":"NIC Module","count":4,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":440.0,"d":560.0,"h":88.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Xeon","cpu_tier":"high","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false,"redundant_optional":true},{"model":"NSC-6401","platform":"arm","cpu":"Phytium E2000Q","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 6x 1G LAN, 2 Bypass groups (optional), 2x SFP+, 1x 4G/5G","ram_type":"DDR4","ram_max_gb":16,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":{"count":2,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":300.0,"h":44.0},"power_w":18.64,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"phytium","cpu_family":"E2000Q","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true,"redundant_optional":true},{"model":"NSC-6503","platform":"arm","cpu":"Phytium E2000Q","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 8x 1G LAN, 1 Bypass group (optional), 1x 4G/5G","ram_type":"DDR4","ram_max_gb":16,"storage":[{"type":"tf","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":8,"type":"RJ45","speed":"1G"},"combo":{"count":2,"type":"RJ45/SFP","speed":"1G"},"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":null,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null}],"form_factor":"desktop","dimensions_mm":{"w":230.0,"d":176.0,"h":44.0},"power_w":19.78,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"phytium","cpu_family":"E2000Q","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":2,"has_bypass":true},{"model":"NSC-67AA","platform":"arm","cpu":"Phytium E2000Q","cpu_cores":4,"cpu_freq_ghz":2.0,"description":"ARM platform, 9x mixed (6x SFP + 2x SFP+), 1x NIC slot, 1x 4G/5G","ram_type":"DDR4","ram_max_gb":16,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"m2_nvme","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":9,"type":"RJ45","speed":"1G/2.5G"},"combo":null,"wan":null,"sfp":{"count":6,"type":"SFP","speed":"1G"},"sfp_plus":{"count":2,"type":"SFP+","speed":"10G"}},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":300.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","OpenWrt"],"cpu_vendor":"phytium","cpu_family":"E2000Q","cpu_tier":"mid","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":false},{"model":"NSC-7401","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x 1G LAN, 3 Bypass groups (optional), 4x SFP+, 1x NIC slot, 1x 4G/5G","ram_type":"DDR4","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":4,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":450.0,"h":44.0},"power_w":40.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-7411","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x 1G LAN, 3 Bypass groups (optional), 4x SFP+, 2x NIC slots, 1x 4G/5G","ram_type":"DDR4","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":4,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":null,"nic_expansion":2,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"NIC Module","count":2,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":450.0,"h":44.0},"power_w":40.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-7503","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x 1G LAN, 2 Bypass groups (optional), 2x SFP, 2x 4G/5G, 1x WiFi","ram_type":"DDR4","ram_max_gb":64,"storage":[{"type":"emmc","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":{"count":2,"type":"SFP","speed":"1G"},"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"desktop","dimensions_mm":{"w":240.0,"d":200.0,"h":44.0},"power_w":40.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-7701","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x 1G LAN, 3 Bypass groups (optional), 2x SFP+, 1x NIC slot, 1x WiFi","ram_type":"DDR4","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":2,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":{"count":1},"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":450.0,"h":44.0},"power_w":40.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true,"redundant_optional":true},{"model":"NSC-7702","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x 1G LAN, 3 Bypass groups (optional), 2x SFP+, 1x NIC slot, 1x WiFi","ram_type":"DDR4","ram_max_gb":128,"storage":[{"type":"sata","count":2},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":2,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":{"count":1},"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":440.0,"d":640.0,"h":88.0},"power_w":60.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true,"redundant_optional":true},{"model":"NSC-7712","platform":"x86","cpu":"Intel Atom® C3000 Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x 1G LAN, 3 Bypass groups (optional), 2x SFP+, 1x NIC slot, 1x WiFi","ram_type":"DDR4","ram_max_gb":128,"storage":[{"type":"sata","count":2},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":{"count":2,"type":"SFP+","speed":"10G"}},"bypass":{"supported":true,"groups":3,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":{"count":1},"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":440.0,"d":450.0,"h":88.0},"power_w":40.0,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"C3000","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true,"redundant_optional":true},{"model":"NSC-8001","platform":"x86","cpu":"1st/2nd Gen Intel® Xeon® Scalable Processors","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 8x NIC slots","ram_type":"DDR4","ram_max_gb":384,"storage":[{"type":"sata","count":2},{"type":"msata","count":1},{"type":"tf","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":null,"nic_expansion":8,"npu_tops":null,"expansion":[{"type":"NIC Module","count":8,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":440.0,"d":560.0,"h":88.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Xeon","cpu_tier":"high","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-8031","platform":"x86","cpu":"1st/2nd Gen Intel® Xeon® Scalable Processors","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 4x NIC slots","ram_type":"DDR4","ram_max_gb":384,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"tf","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":null,"nic_expansion":4,"npu_tops":null,"expansion":[{"type":"NIC Module","count":4,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":560.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Xeon","cpu_tier":"high","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-82AA","platform":"x86","cpu":"Supports Intel® 12th-14th Gen Core/Pentium/Celeron","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 7x mixed LAN, 2 Bypass groups (optional), 1x NIC slot","ram_type":"DDR5","ram_max_gb":128,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":7,"type":"RJ45","speed":"1G/2.5G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":1,"npu_tops":null,"expansion":[{"type":"NIC Module","count":1,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":430.0,"h":44.5},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Core","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true},{"model":"NSC-8C01","platform":"x86","cpu":"Supports Intel® 12th-14th Gen Core/Pentium/Celeron","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 4x NIC slots, 1x WiFi","ram_type":"DDR5","ram_max_gb":192,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":{"count":1},"nic_expansion":4,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":4,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":560.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Core","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-8C02","platform":"x86","cpu":"Supports Intel® 12th-14th Gen Core/Pentium/Celeron","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 8x NIC slots, 1x 4G/5G, 1x WiFi","ram_type":"DDR5","ram_max_gb":192,"storage":[{"type":"sata","count":2},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":8,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":8,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":440.0,"d":560.0,"h":88.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Core","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-8D01","platform":"x86","cpu":"Supports Intel® 12th-14th Gen Core/Pentium/Celeron","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 9x mixed LAN, 4 Bypass groups (optional), 2x SFP, 2x NIC slots, 1x 4G/5G, 1x WiFi","ram_type":"DDR5","ram_max_gb":192,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":9,"type":"RJ45","speed":"1G/2.5G"},"combo":null,"wan":null,"sfp":{"count":2,"type":"SFP","speed":"1G"},"sfp_plus":null},"bypass":{"supported":true,"groups":4,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":2,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":2,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":560.0,"h":44.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Core","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true,"redundant_optional":true},{"model":"NSC-8D02","platform":"x86","cpu":"Supports Intel® 12th-14th Gen Core/Pentium/Celeron","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 9x mixed LAN, 4 Bypass groups (optional), 2x SFP, 4x NIC slots, 1x 4G/5G, 1x WiFi","ram_type":"DDR5","ram_max_gb":192,"storage":[{"type":"sata","count":2},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":9,"type":"RJ45","speed":"1G/2.5G"},"combo":null,"wan":null,"sfp":{"count":2,"type":"SFP","speed":"1G"},"sfp_plus":null},"bypass":{"supported":true,"groups":4,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":1,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":4,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null},{"type":"NIC Module","count":4,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":440.0,"d":560.0,"h":88.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Core","cpu_tier":"mid","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":true,"redundant_optional":true},{"model":"NSC-8E01","platform":"x86","cpu":"4th/5th Gen Intel® Xeon® Scalable Processors","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 4x NIC slots","ram_type":"DDR5","ram_max_gb":4096,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":null,"nic_expansion":4,"npu_tops":null,"expansion":[{"type":"NIC Module","count":4,"purpose":"NIC expansion","note":null}],"form_factor":"1u_rack","dimensions_mm":{"w":440.0,"d":592.0,"h":44.5},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Xeon","cpu_tier":"high","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-8E02","platform":"x86","cpu":"4th/5th Gen Intel® Xeon® Scalable Processors","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 2x 1G LAN, 8x NIC slots","ram_type":"DDR5","ram_max_gb":4096,"storage":[{"type":"sata","count":2},{"type":"msata","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":2,"type":"RJ45","speed":"1G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":false,"groups":0,"gen":null,"optional":false,"port_pairs":[],"_note":"Via NIC module expansion"},"cellular":null,"wifi":null,"nic_expansion":8,"npu_tops":null,"expansion":[{"type":"NIC Module","count":8,"purpose":"NIC expansion","note":null}],"form_factor":"2u_rack","dimensions_mm":{"w":440.0,"d":592.0,"h":88.0},"power_w":null,"certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"Xeon","cpu_tier":"high","lifecycle":"production","redundant_power":true,"combo_count":0,"has_bypass":false},{"model":"NSC-90A5","platform":"x86","cpu":"Intel® Alder Lake N or Intel® Atom X7000C Series, default Intel® N100","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 fanless platform, 6x 2.5G LAN (4x PoE+), 1 Bypass group (optional), 2x 4G/5G, 1x WiFi","ram_type":"DDR5","ram_max_gb":32,"storage":[{"type":"emmc","count":1},{"type":"m2_nvme","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"2.5G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":1,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":{"count":2,"gen":"4G/5G"},"wifi":{"count":1},"nic_expansion":null,"npu_tops":null,"expansion":[{"type":"M.2","count":1,"purpose":"4G/5G","note":null},{"type":"SIM","count":1,"purpose":"4G/5G","note":null},{"type":"M.2","count":1,"purpose":"WiFi","note":null}],"form_factor":"fanless","dimensions_mm":{"w":210,"d":150,"h":41},"power_w":"29.7-32.29","certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"N100","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-99A3","platform":"x86","cpu":"Intel® N100/i3-N305/X7000C Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x 2.5G LAN, 2 Bypass groups (optional)","ram_type":"DDR4","ram_max_gb":16,"storage":[{"type":"emmc","count":1},{"type":"msata","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"2.5G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":null,"npu_tops":null,"expansion":[],"form_factor":"desktop","dimensions_mm":{"w":230.0,"d":180.0,"h":44.0},"power_w":"28.5-31.8","certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"N100","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true},{"model":"NSC-99AA","platform":"x86","cpu":"Intel® N100/i3-N305/X7000C Series","cpu_cores":4,"cpu_freq_ghz":null,"description":"x86 platform, 6x 2.5G LAN, 2 Bypass groups (optional)","ram_type":"DDR4","ram_max_gb":16,"storage":[{"type":"sata","count":1},{"type":"msata","count":1},{"type":"emmc","count":1}],"ports":{"lan":{"count":6,"type":"RJ45","speed":"2.5G"},"combo":null,"wan":null,"sfp":null,"sfp_plus":null},"bypass":{"supported":true,"groups":2,"gen":"Gen3","optional":true,"port_pairs":[]},"cellular":null,"wifi":null,"nic_expansion":null,"npu_tops":null,"expansion":[],"form_factor":"1u_rack","dimensions_mm":{"w":430.0,"d":282.0,"h":44.0},"power_w":"28.5-31.8","certifications":{},"os_compatibility":["Linux","pfSense","OPNsense","OpenWrt"],"cpu_vendor":"intel","cpu_family":"N100","cpu_tier":"entry","lifecycle":"production","redundant_power":false,"combo_count":0,"has_bypass":true}];
+const DEGRADE_RULES = [{"field":"lan","degrade_type":"reduce","step":2,"max_degrades":1,"message_zh":"放宽端口数要求后有以下匹配","message_en":"With relaxed port count requirement, these match","note":"最多降1级=减2口（2026-07-25 审查：原 max_degrades=2 会把8口需求推到4口，幅度过大）"},{"field":"requires_wifi","degrade_type":"remove","max_degrades":1,"message_zh":"移除WiFi要求后有以下匹配","message_en":"Without WiFi requirement, these match"},{"field":"requires_cellular","degrade_type":"remove","max_degrades":1,"message_zh":"移除4G/5G要求后有以下匹配","message_en":"Without cellular requirement, these match"},{"field":"port_types","degrade_type":"remove","max_degrades":1,"message_zh":"移除光口数量要求后有以下匹配","message_en":"Without optical port count requirement, these match","note":"2026-07-25 补充：文档一直声称存在但配置缺失"},{"field":"storage_type","degrade_type":"remove","max_degrades":1,"message_zh":"移除存储类型要求后有以下匹配","message_en":"Without storage type requirement, these match","note":"2026-07-25 补充：文档一直声称存在但配置缺失"},{"field":"sfp_type","degrade_type":"lower","order":["sfp_plus","sfp"],"max_degrades":1,"message_zh":"降低光口速率要求（万兆→千兆）后有以下匹配","message_en":"With lower SFP speed requirement (10G→1G), these match"},{"field":"lan_speed","degrade_type":"lower","order":["10G","2.5G","1G","100M"],"max_degrades":1,"message_zh":"降低速率要求后有以下匹配","message_en":"With lower speed requirement, these match","note":"最多降1档（2026-07-25 Ethan 拍板：原 max_degrades=2 会出现 10G→1G 十倍落差错推）"},{"field":"form_factor","degrade_type":"remove","max_degrades":0,"message_zh":null,"message_en":null,"note":"形态是部署场景硬需求，不可降级"},{"field":"platform","degrade_type":"remove","max_degrades":0,"message_zh":null,"message_en":null,"note":"平台偏好通常不可降级"},{"field":"ram_type","degrade_type":"remove","max_degrades":0,"message_zh":null,"message_en":null,"note":"DDR4/DDR5 不兼容，不可降级"},{"field":"cpu_tier","degrade_type":"remove","max_degrades":0,"message_zh":null,"message_en":null,"note":"CPU代际是硬需求，不可降级"},{"field":"bypass","degrade_type":"remove","max_degrades":0,"message_zh":null,"message_en":null,"note":"2026-07-25 起为硬筛选条件（客户明确要 Bypass 时无 Bypass 机型直接排除），不可降级"},{"field":"requires_redundant_power","degrade_type":"remove","max_degrades":0,"message_zh":null,"message_en":null,"note":"2026-07-25 起为硬筛选条件，不可降级"},{"field":"requires_combo","degrade_type":"remove","max_degrades":0,"message_zh":null,"message_en":null,"note":"2026-07-25 起为硬筛选条件，不可降级"}];
+
+// ============================================================
+// CONFIGURATION — Update before deploying
+// ============================================================
+var CONFIG = {
+  email: 'ethansu@imaituo.com',
+  whatsapp: '8619328760552', // with country code, no +
+  name: 'Ethan',
+  company: 'Shenzhen MAITUO Technology Co., Ltd.',
+  linkedin: 'https://www.linkedin.com/in/ethansumaituo'  // 2026-07-29 填入：Ethan 个人主页（公司页无管理权限，暂挂个人）
+};
+
+// ============================================================
+// Scenario presets
+// ============================================================
+var SCENARIOS = {
+  'network-security': { lan: 6, lan_speed: '1G', bypass: true, sfp_type: 'sfp' },
+  'sd-wan':           { lan: 4, platform: 'arm', requires_cellular: true },
+  'enterprise':       { lan: 8, platform: 'x86', form_factor: '1u_rack', sfp_type: 'sfp_plus' },
+  'edge':             { lan: 4, platform: 'arm', form_factor: 'fanless', requires_wifi: true }
+};
+
+// ============================================================
+// SVG icon library
+// ============================================================
+var ICONS = {
+  ports: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 17.5h.01M10 17.5h.01M14 17.5h.01M18 17.5h.01"/></svg>',
+  bypass: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+  cpu: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>',
+  ram: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 11v2M11 11v2M15 11v2M7 21h10"/></svg>',
+  storage: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+  form: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h.01M18 12h.01"/></svg>',
+  wifi: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></svg>',
+  cellular: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.86a10 10 0 0 1 14 0"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/></svg>',
+  power: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+  npu: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.5-3 5.7V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.3c-1.8-1.2-3-3.3-3-5.7a7 7 0 0 1 7-7z"/><path d="M9 22h6"/></svg>',
+  os: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+  spark: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  wa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
+  info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+  warn: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>',
+  wrench: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+  cert: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13l1.5 8-5-3-5 3 1.5-8"/></svg>',
+  linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'
+};
+
+// ============================================================
+// Selection Logic (ported from selector.py)
+// ============================================================
+
+function getTotalPorts(p) {
+  // 与 Python get_total_ports 对齐：只算 LAN + Combo（SFP+ 不做兜底，
+  // 否则纯光口产品会被端口数条件错误命中）
+  var ports = p.ports || {};
+  var lan = ports.lan || {};
+  var combo = ports.combo || {};
+  return (lan.count || 0) + (combo.count || 0);
+}
+
+function getSpeedNum(speed) {
+  // 与 Python get_lan_speed_num 对齐：范围值（"1G/2.5G"）取最高档
+  var map = { '100M': 100, '1G': 1000, '1000M': 1000, '2.5G': 2500, '10G': 10000 };
+  if (typeof speed !== 'string') return 0;
+  if (speed.indexOf('/') >= 0) {
+    var parts = speed.split('/'), best = 0;
+    for (var i = 0; i < parts.length; i++) best = Math.max(best, getSpeedNum(parts[i]));
+    return best;
+  }
+  return map[speed] || map[speed.toUpperCase()] || 0;
+}
+
+function hardFilter(products, params) {
+  return products.filter(function(p) {
+    if (params.platform && p.platform !== params.platform) return false;
+    if (params.lan != null) {
+      if (getTotalPorts(p) < params.lan) return false;
+    }
+    if (params.lan_speed) {
+      // 与 Python hard_filter 对齐：只看电口速率，不做 SFP+ 兜底；
+      // 电口 speed 缺失（纯光口产品）直接排除
+      var lan = (p.ports || {}).lan || {};
+      if (getSpeedNum(lan.speed) < getSpeedNum(params.lan_speed)) return false;
+    }
+    if (params.form_factor && p.form_factor !== params.form_factor) return false;
+    if (params.bypass) {
+      var bp = p.bypass || {};
+      if (!bp.supported) return false;
+    }
+    if (params.cpu_tier && p.cpu_tier !== params.cpu_tier) return false;
+    if (params.ram_type && (p.ram_type || '').toUpperCase() !== params.ram_type.toUpperCase()) return false;
+    if (params.requires_cellular && !p.cellular) return false;
+    if (params.requires_wifi && !p.wifi) return false;
+    if (params.sfp_type) {
+      var ports1 = p.ports || {};
+      if (params.sfp_type === 'sfp' && !(ports1.sfp && ports1.sfp.count > 0)) return false;
+      if (params.sfp_type === 'sfp_plus' && !(ports1.sfp_plus && ports1.sfp_plus.count > 0)) return false;
+    }
+    if (params.sfp_count != null) {
+      var ports2 = p.ports || {};
+      var sfpTotal = ((ports2.sfp || {}).count || 0) + ((ports2.sfp_plus || {}).count || 0);
+      if (sfpTotal < params.sfp_count) return false;
+    }
+    // 以下与 Python hard_filter 对齐（UI 暂不产出这些参数，但 API 调用可达，保持两端语义一致）
+    if (params.port_types) {
+      var ports3 = p.ports || {};
+      for (var pt in params.port_types) {
+        if (((ports3[pt] || {}).count || 0) < params.port_types[pt]) return false;
+      }
+    }
+    // 存储类型（任一匹配即通过）与内存容量下限——07-25 审查漏接，07-28 候选集对拍补上
+    if (params.storage_type) {
+      var stReq = Array.isArray(params.storage_type) ? params.storage_type : [params.storage_type];
+      var pStores = getStorageTypes(p);
+      var anyStore = false;
+      for (var si2 = 0; si2 < stReq.length; si2++) {
+        if (pStores.indexOf(stReq[si2]) >= 0) { anyStore = true; break; }
+      }
+      if (!anyStore) return false;
+    }
+    if (params.ram_min != null) {
+      if ((p.ram_max_gb || 0) < params.ram_min) return false;
+    }
+    if (params.wan != null) {
+      if ((((p.ports || {}).wan || {}).count || 0) < params.wan) return false;
+    }
+    if (params.requires_combo) {
+      if ((((p.ports || {}).combo || {}).count || 0) <= 0) return false;
+    }
+    if (params.requires_redundant_power && !(p.redundant_power || p.redundant_optional)) return false;
+    if (params.requires_os) {
+      var osList = (p.os_compatibility || []).map(function(o) { return String(o).toLowerCase(); });
+      var reqOs = Array.isArray(params.requires_os) ? params.requires_os : [params.requires_os];
+      for (var oi = 0; oi < reqOs.length; oi++) {
+        if (osList.indexOf(String(reqOs[oi]).toLowerCase()) < 0) return false;
+      }
+    }
+    if (params.requires_cert) {
+      var certs = p.certifications || {};
+      var certKeys = Object.keys(certs);
+      if (certKeys.length > 0) {
+        var reqCert = Array.isArray(params.requires_cert) ? params.requires_cert : [params.requires_cert];
+        for (var ci = 0; ci < reqCert.length; ci++) {
+          var found = certKeys.some(function(k) { return k.toUpperCase() === String(reqCert[ci]).toUpperCase(); });
+          if (!found) return false;
+        }
+      }
+      // 认证数据缺失按未知处理：不排除（与 Python 一致）
+    }
+    if (params.requires_wide_temp && p.temp_range) {
+      var tm = /(-?\d+)\s*[°℃]/.exec(String(p.temp_range));
+      if (tm && parseInt(tm[1], 10) > -20) return false;
+    }
+    if (params.max_power_w != null) {
+      var pw = parseFloat(p.power_w) || 0;
+      if (pw > 0 && pw > params.max_power_w) return false;
+    }
+    if (params.max_depth_mm != null) {
+      var depth = (p.dimensions_mm || {}).d || 0;
+      if (depth > 0 && depth > params.max_depth_mm) return false;
+    }
+    return true;
+  });
+}
+
+function applyDegradation(products, params) {
+  var candidates = hardFilter(products, params);
+  if (candidates.length > 0) return { candidates: candidates, degraded: [], effectiveParams: params };
+
+  var degraded = [];
+  var current = {};
+  for (var k in params) current[k] = params[k];
+
+  // 与 Python _apply_degradation 对齐：按 degrade_rules.json 声明顺序遍历
+  // （原先 JS 另写死顺序，两端降级路径分叉会推不同产品）
+  for (var di = 0; di < DEGRADE_RULES.length; di++) {
+    var rule = DEGRADE_RULES[di];
+    var field = rule.field;
+    if ((rule.max_degrades || 0) === 0) continue;
+    if (current[field] == null || current[field] === false) continue;
+
+    var dtype = rule.degrade_type;
+    var maxDeg = rule.max_degrades;
+
+    if (dtype === 'reduce' && typeof current[field] === 'number') {
+      var step = rule.step || 1;
+      for (var i = 1; i <= maxDeg; i++) {
+        var new_val = current[field] - step * i;
+        if (new_val <= 0) break;
+        var test = {};
+        for (var tk in current) test[tk] = current[tk];
+        test[field] = new_val;
+        candidates = hardFilter(products, test);
+        if (candidates.length > 0) {
+          degraded.push({ field: field, original: params[field], to: new_val, msg: rule.message_en });
+          current[field] = new_val;
+          break;
+        }
+      }
+    } else if (dtype === 'lower' && rule.order) {
+      var order = rule.order;
+      var idx = order.indexOf(current[field]);
+      if (idx >= 0) {
+        for (var j = idx + 1; j < Math.min(idx + 1 + maxDeg, order.length); j++) {
+          var test2 = {};
+          for (var tk2 in current) test2[tk2] = current[tk2];
+          test2[field] = order[j];
+          candidates = hardFilter(products, test2);
+          if (candidates.length > 0) {
+            degraded.push({ field: field, original: params[field], to: order[j], msg: rule.message_en });
+            current[field] = order[j];
+            break;
+          }
+        }
+      }
+    } else if (dtype === 'remove') {
+      var test3 = {};
+      for (var tk3 in current) { if (tk3 !== field) test3[tk3] = current[tk3]; }
+      candidates = hardFilter(products, test3);
+      if (candidates.length > 0) {
+        degraded.push({ field: field, original: params[field], to: null, msg: rule.message_en });
+        delete current[field];
+      }
+    }
+    if (candidates.length > 0) break;
+  }
+
+  return { candidates: candidates, degraded: degraded, effectiveParams: current };
+}
+
+function hasPcieExpansion(p) {
+  // 与 Python _has_pcie_expansion 对齐
+  if ((p.nic_expansion || 0) > 0) return true;
+  var expansion = p.expansion || [];
+  for (var i = 0; i < expansion.length; i++) {
+    if (expansion[i].type === 'PCIe' || expansion[i].type === 'NIC模块') return true;
+  }
+  return false;
+}
+
+function getStorageTypes(p) {
+  // 与 Python _get_storage_types 对齐（新格式数组）
+  var storage = p.storage || [];
+  var types = [];
+  for (var i = 0; i < storage.length; i++) {
+    var s = storage[i];
+    if (s && s.type && (s.count || 0) > 0) types.push(s.type);
+  }
+  return types;
+}
+
+function scoreBreakdown(product, params) {
+  // 与 Python soft_score 全量对齐（权重 = config.json scoring）
+  // 三段口径（2026-07-28 归一化改造）：
+  //   demand    需求驱动得分 —— 只累加客户实际填的参数对应的分
+  //   demandMax 需求驱动满分 —— 展示百分比的分母（客户没填的参数不进分母，否则输入越少天花板越低）
+  //   bonus     产品固有加分（M.2/低功耗）—— 只参与排序，不进展示分
+  var demand = 40;
+  var demandMax = 40;
+  var bonus = 0;
+  var totalPorts = getTotalPorts(product);
+
+  // 端口数量匹配度
+  if (params.lan != null) {
+    demandMax += 20;
+    var diff = totalPorts - params.lan;
+    if (diff === 0) demand += 20;
+    else if (diff > 0 && diff <= 2) demand += 15;
+    else if (diff > 2) demand += Math.max(0, 12 - (diff - 2) * 2);
+    else demand -= 20;
+  }
+
+  // Bypass 匹配
+  if (params.bypass) {
+    demandMax += 10;
+    var bp = product.bypass || {};
+    demand += bp.supported ? 10 : -5;
+  }
+
+  // 扩展能力（M.2 数量；4G/5G modem 槽和 WiFi 槽不算）—— 固有加分
+  var expansion = product.expansion || [];
+  var m2count = 0;
+  for (var i = 0; i < expansion.length; i++) {
+    var e = expansion[i];
+    if (e.type === 'M.2' && !/4g|5g|wifi|wi-fi|cellular/i.test(e.purpose || '')) m2count++;
+  }
+  if (m2count >= 2) bonus += 5;
+  else if (m2count >= 1) bonus += 3;
+
+  // 功耗（数值/范围字符串取下限/null 不参与）—— 固有加分
+  var powerW = parseFloat(product.power_w) || 0;
+  if (powerW > 0) {
+    if (powerW <= 10) bonus += 5;
+    else if (powerW <= 15) bonus += 3;
+    else if (powerW <= 20) bonus += 1;
+  }
+
+  // 存储类型匹配
+  if (params.storage_type) {
+    demandMax += 5;
+    var st = Array.isArray(params.storage_type) ? params.storage_type : [params.storage_type];
+    var productStores = getStorageTypes(product);
+    var matched = 0;
+    for (var si = 0; si < st.length; si++) if (productStores.indexOf(st[si]) >= 0) matched++;
+    if (matched >= st.length) demand += 5;
+    else if (matched > 0) demand += 3;
+  }
+
+  // 网络接口类型匹配
+  if (params.port_types) {
+    demandMax += 5;
+    var ports = product.ports || {};
+    var ptMatched = 0, ptTotal = 0;
+    for (var ptype in params.port_types) {
+      ptTotal++;
+      if (((ports[ptype] || {}).count || 0) >= params.port_types[ptype]) ptMatched++;
+    }
+    if (ptMatched >= ptTotal) demand += 5;
+    else if (ptMatched > 0) demand += 3;
+  }
+
+  // 内存匹配
+  if (params.ram_type) {
+    demandMax += 3;
+    if ((product.ram_type || '').toUpperCase() === params.ram_type.toUpperCase()) demand += 3;
+  }
+  if (params.ram_min != null) {
+    demandMax += 2;
+    var ramMax = product.ram_max_gb || 0;
+    if (ramMax >= params.ram_min * 2) demand += 2;
+    else if (ramMax >= params.ram_min) demand += 1;
+  }
+
+  // 扩展需求匹配（上限 5 分）
+  var extBonus = 0, extMax = 0;
+  if (params.requires_cellular) { extMax += 2; if (product.cellular) extBonus += 2; }
+  if (params.requires_wifi) { extMax += 2; if (product.wifi) extBonus += 2; }
+  if (params.requires_pcie) { extMax += 1; if (hasPcieExpansion(product)) extBonus += 1; }
+  demandMax += Math.min(5, extMax);
+  demand += Math.min(5, extBonus);
+
+  // Combo 口匹配
+  if (params.requires_combo) {
+    demandMax += 3;
+    var combo = (product.ports || {}).combo || {};
+    if ((combo.count || 0) > 0) demand += 3;
+  }
+
+  // 冗余电源匹配（redundant_power=标配 / redundant_optional=可选配，与 Python 口径一致都算支持；
+  // power 对象含中文内部备注不注入网页，redundant_optional 由 build.py 派生）
+  if (params.requires_redundant_power) {
+    demandMax += 3;
+    if (product.redundant_power || product.redundant_optional) demand += 3;
+  }
+
+  return { demand: demand, demandMax: demandMax, bonus: bonus };
+}
+
+function softScore(product, params) {
+  // 排序分 = 需求分 + 固有加分，与 Python 对拍口径一致
+  var b = scoreBreakdown(product, params);
+  return Math.min(100, Math.max(0, b.demand + b.bonus));
+}
+
+function matchPercent(b) {
+  // 展示分 = 需求满足度（0~100）。只设了硬筛选参数时分母=基础分，所有候选同等满足 → 100%
+  if (b.demandMax <= 40) return 100;
+  return Math.min(100, Math.max(0, Math.round(100 * b.demand / b.demandMax)));
+}
+
+function generateReasonEN(product, params) {
+  var ports = product.ports || {};
+  var lan = ports.lan || {};
+  var combo = ports.combo || {};
+  var sfp = ports.sfp || {};
+  var sfpPlus = ports.sfp_plus || {};
+  var bp = product.bypass || {};
+  var parts = [];
+
+  // 无电口的纯光口产品不输出 "0x ? LAN"
+  if ((lan.count || 0) > 0) {
+    var portStr = lan.count + 'x ' + (lan.speed || '?') + ' LAN';
+    if (combo.count) portStr += ' + ' + combo.count + 'x Combo';
+    parts.push(portStr);
+  }
+  if (sfp.count) parts.push(sfp.count + 'x ' + (sfp.speed || '1G') + ' SFP');
+  if (sfpPlus.count) parts.push(sfpPlus.count + 'x ' + (sfpPlus.speed || '10G') + ' SFP+');
+
+  if (bp.supported && bp.groups) {
+    parts.push(bp.groups + ' Bypass group' + (bp.groups > 1 ? 's' : '') + (bp.optional ? ' (optional)' : ''));
+  }
+
+  if (product.platform === 'arm') parts.push('ARM, low power');
+  else if (product.platform === 'x86') parts.push('x86, high performance');
+
+  var ffMap = { 'desktop': 'Desktop', '1u_rack': '1U rack-mount', 'fanless': 'Fanless', '2u_rack': '2U rack-mount' };
+  if (ffMap[product.form_factor]) parts.push(ffMap[product.form_factor]);
+
+  // 功耗（≤30W 才用 "only"；范围值标注 config-dependent）
+  var pwRaw = product.power_w;
+  var pwNum = parseFloat(pwRaw) || 0;
+  if (pwNum > 0) {
+    var pwLabel = (typeof pwRaw === 'string') ? pwRaw + 'W (config-dependent)' : pwRaw + 'W';
+    if (pwNum <= 30) parts.push('only ' + pwLabel + ' power');
+    else parts.push(pwLabel + ' power');
+  }
+
+  return parts.join(' · ');
+}
+
+function select(params) {
+  var result = applyDegradation(PRODUCTS, params);
+  var candidates = result.candidates;
+  var degraded = result.degraded;
+  var effectiveParams = result.effectiveParams;
+
+  if (candidates.length === 0) {
+    return { success: false, degraded: degraded, effectiveParams: effectiveParams };
+  }
+
+  var scored = candidates.map(function(p) {
+    var b = scoreBreakdown(p, effectiveParams);
+    return { product: p, score: Math.min(100, Math.max(0, b.demand + b.bonus)), matchPct: matchPercent(b) };
+  });
+  // 与 Python _tiebreak_key 对齐：分数 → CPU 档位 → 型号（不再由注入顺序/单遍交换决定）
+  var TIER_RANK = { server: 3, high: 2, mid: 1, entry: 0 };
+  scored.sort(function(a, b) {
+    if (b.score !== a.score) return b.score - a.score;
+    var ta = TIER_RANK[(a.product.cpu_tier || '').toLowerCase()] || 0;
+    var tb = TIER_RANK[(b.product.cpu_tier || '').toLowerCase()] || 0;
+    if (tb !== ta) return tb - ta;
+    return (a.product.model || '').localeCompare(b.product.model || '');
+  });
+
+  var top = scored.slice(0, 3);
+  return {
+    success: true,
+    recommended: top[0],
+    alternatives: top.slice(1),
+    total: scored.length,
+    degraded: degraded,
+    effectiveParams: effectiveParams
+  };
+}
+
+function findSimilarProducts(params) {
+  var scored = PRODUCTS.map(function(p) {
+    var score = 0;
+    var maxScore = 0;
+
+    // maxScore 只累加实际设置的参数（原先恒为 53，少量参数无匹配时相似度被稀释，区块静默消失）
+    if (params.platform) {
+      maxScore += 10;
+      if (p.platform === params.platform) score += 10;
+    }
+
+    if (params.form_factor) {
+      maxScore += 10;
+      if (p.form_factor === params.form_factor) score += 10;
+    }
+
+    if (params.bypass) {
+      maxScore += 8;
+      if (p.bypass && p.bypass.supported) score += 8;
+    }
+
+    if (params.lan) {
+      maxScore += 10;
+      var totalPorts = getTotalPorts(p);
+      var ratio = Math.min(totalPorts / params.lan, 1);
+      score += Math.round(ratio * 10);
+    }
+
+    if (params.cpu_tier) {
+      maxScore += 5;
+      if (p.cpu_tier === params.cpu_tier) score += 5;
+    }
+
+    if (params.ram_type) {
+      maxScore += 5;
+      if (p.ram_type === params.ram_type) score += 5;
+    }
+
+    if (params.sfp_type) {
+      maxScore += 5;
+      var ports = p.ports || {};
+      if (params.sfp_type === 'sfp' && ports.sfp && ports.sfp.count > 0) score += 5;
+      if (params.sfp_type === 'sfp_plus' && ports.sfp_plus && ports.sfp_plus.count > 0) score += 5;
+    }
+
+    var matchPercent = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
+    return { product: p, score: score, matchPercent: matchPercent };
+  });
+
+  scored.sort(function(a, b) { return b.score - a.score; });
+  return scored.filter(function(s) { return s.matchPercent >= 30; }).slice(0, 3);
+}
+
+// ============================================================
+// Formatting helpers
+// ============================================================
+
+function formatPorts(product) {
+  var ports = product.ports || {};
+  var lan = ports.lan || {};
+  var combo = ports.combo || {};
+  var sfp = ports.sfp || {};
+  var sfpPlus = ports.sfp_plus || {};
+  var parts = [];
+  if (lan.count) parts.push(lan.count + '× ' + (lan.speed || '?') + ' RJ45');
+  if (combo.count) parts.push(combo.count + '× Combo');
+  if (sfp.count) parts.push(sfp.count + '× ' + (sfp.speed || '?') + ' SFP');
+  if (sfpPlus.count) parts.push(sfpPlus.count + '× ' + (sfpPlus.speed || '?') + ' SFP+');
+  return parts.join(' + ') || '—';
+}
+
+function formatStorage(storage) {
+  if (!storage) return '—';
+  var names = { m2_nvme: 'M.2 NVMe', m2_sata: 'M.2 SATA', sata: '2.5" SATA', msata: 'mSATA', emmc: 'eMMC', tf: 'TF', cf: 'CF' };
+  var parts = [];
+  if (Object.prototype.toString.call(storage) === '[object Array]') {
+    for (var i = 0; i < storage.length; i++) {
+      var s = storage[i] || {};
+      var label = names[s.type] || s.type;
+      if (!label) continue;
+      if (s.count && s.count > 1) label += ' ×' + s.count;
+      parts.push(label);
+    }
+  } else {
+    for (var key in names) { if (storage[key]) parts.push(names[key]); }
+  }
+  return parts.join(' + ') || '—';
+}
+
+function formatFormFactor(ff) {
+  var map = { 'desktop': 'Desktop', '1u_rack': '1U Rack-mount', 'fanless': 'Fanless', '2u_rack': '2U Rack-mount' };
+  return map[ff] || ff || '—';
+}
+
+function formatOS(os) {
+  if (!os) return '—';
+  if (Object.prototype.toString.call(os) === '[object Array]') return os.join(' · ') || '—';
+  return String(os);
+}
+
+function escHtml(str) {
+  if (str == null) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ============================================================
+// Filter state
+// ============================================================
+
+var FILTER_KEYS = ['lan', 'lan_speed', 'platform', 'form_factor', 'cpu_tier', 'ram_type', 'sfp_type', 'sfp_count'];
+
+function getFilterParams() {
+  var params = {};
+  for (var i = 0; i < FILTER_KEYS.length; i++) {
+    var key = FILTER_KEYS[i];
+    var btn = document.querySelector('.btn-group[data-filter="' + key + '"] .btn-opt.active');
+    if (btn && btn.dataset.value) {
+      params[key] = (key === 'lan' || key === 'sfp_count') ? parseInt(btn.dataset.value, 10) : btn.dataset.value;
+    }
+  }
+  if (document.getElementById('bypass-toggle').checked) params.bypass = true;
+  if (document.getElementById('cellular-toggle').checked) params.requires_cellular = true;
+  if (document.getElementById('wifi-toggle').checked) params.requires_wifi = true;
+  return params;
+}
+
+function hasAnyFilter(params) {
+  for (var k in params) return true;
+  return false;
+}
+
+function setButtonGroup(filter, value) {
+  var group = document.querySelector('.btn-group[data-filter="' + filter + '"]');
+  if (!group) return;
+  group.querySelectorAll('.btn-opt').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.value === value);
+  });
+}
+
+function applyScenario(scenarioKey) {
+  var preset = SCENARIOS[scenarioKey];
+  if (!preset) return;
+
+  resetFiltersOnly();
+
+  if (preset.lan != null) setButtonGroup('lan', String(preset.lan));
+  if (preset.lan_speed) setButtonGroup('lan_speed', preset.lan_speed);
+  if (preset.platform) setButtonGroup('platform', preset.platform);
+  if (preset.form_factor) setButtonGroup('form_factor', preset.form_factor);
+  if (preset.bypass) document.getElementById('bypass-toggle').checked = true;
+  if (preset.cpu_tier) setButtonGroup('cpu_tier', preset.cpu_tier);
+  if (preset.ram_type) setButtonGroup('ram_type', preset.ram_type);
+  if (preset.requires_cellular) document.getElementById('cellular-toggle').checked = true;
+  if (preset.requires_wifi) document.getElementById('wifi-toggle').checked = true;
+  if (preset.sfp_type) setButtonGroup('sfp_type', preset.sfp_type);
+}
+
+function resetFiltersOnly() {
+  for (var i = 0; i < FILTER_KEYS.length; i++) setButtonGroup(FILTER_KEYS[i], '');
+  document.getElementById('bypass-toggle').checked = false;
+  document.getElementById('cellular-toggle').checked = false;
+  document.getElementById('wifi-toggle').checked = false;
+}
+
+function clearScenarioSelection() {
+  document.querySelectorAll('.scenario-card').forEach(function(c) {
+    c.classList.remove('active');
+    c.setAttribute('aria-pressed', 'false');
+  });
+}
+
+// ============================================================
+// Live match counter
+// ============================================================
+
+function updateMatchCounter() {
+  var params = getFilterParams();
+  var dot = document.getElementById('match-dot');
+  var count = document.getElementById('match-count');
+  var label = document.getElementById('match-label');
+
+  if (!hasAnyFilter(params)) {
+    dot.className = 'match-dot idle';
+    count.textContent = PRODUCTS.length;
+    label.textContent = 'models in lineup — set your requirements';
+    return;
+  }
+  var n = hardFilter(PRODUCTS, params).length;
+  dot.className = 'match-dot' + (n === 0 ? ' empty' : '');
+  count.textContent = n;
+  label.textContent = n === 0 ? 'exact matches — try fewer filters, or let us broaden the search' : (n === 1 ? 'model matches your requirements' : 'models match your requirements');
+}
+
+// ============================================================
+// Card rendering
+// ============================================================
+
+function specItem(icon, label, value, cls) {
+  return '<div class="spec-item">' +
+    '<span class="spec-icon">' + icon + '</span>' +
+    '<span class="spec-body">' +
+    '<span class="spec-label">' + label + '</span>' +
+    '<span class="spec-value' + (cls ? ' ' + cls : '') + '">' + value + '</span>' +
+    '</span></div>';
+}
+
+function scoreRing(pct) {
+  // 展示需求满足度（matchPercent 归一化百分比），非内部排序分
+  var r = 25;
+  var circ = 2 * Math.PI * r;
+  var off = circ * (1 - Math.min(100, Math.max(0, pct)) / 100);
+  return '<span class="score-ring" title="Requirements match">' +
+    '<svg width="58" height="58" viewBox="0 0 58 58">' +
+    '<circle class="ring-bg" cx="29" cy="29" r="' + r + '" fill="none" stroke-width="5"/>' +
+    '<circle class="ring-val" cx="29" cy="29" r="' + r + '" fill="none" stroke-width="5" stroke-dasharray="' + circ.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '"/>' +
+    '</svg>' +
+    '<span class="ring-num">' + pct + '<small>%</small></span>' +
+    '</span>';
+}
+
+function buildProductCard(item, isRecommended, effectiveParams, userParams) {
+  var p = item.product;
+  var bp = p.bypass || {};
+  var cpu = p.cpu || '—';
+  if (p.cpu_cores && p.cpu_freq_ghz) cpu += ' · ' + p.cpu_cores + 'C @ ' + p.cpu_freq_ghz + 'GHz';
+  var ram = (p.ram_type || '—') + (p.ram_max_gb ? ', up to ' + p.ram_max_gb + 'GB' : '');
+
+  // 高亮只跟用户提交的需求走（2026-07-28）：没筛选的维度不给 pos/neg，避免满屏绿色误导关注点
+  var hl = userParams || {};
+  var hlPorts = (hl.lan != null || hl.lan_speed || hl.sfp_type || hl.sfp_count != null) ? 'pos' : '';
+  var hlBypass = hl.bypass ? (bp.supported ? 'pos' : 'neg') : '';
+  var hlCpu = (hl.platform || hl.cpu_tier) ? 'pos' : '';
+  var hlRam = hl.ram_type ? 'pos' : '';
+  var hlForm = hl.form_factor ? 'pos' : '';
+  var hlCellular = hl.requires_cellular ? 'pos' : '';
+  var hlWifi = hl.requires_wifi ? 'pos' : '';
+
+  var html = '<article class="product-card' + (isRecommended ? ' recommended' : '') + '">';
+
+  // Header
+  html += '<div class="card-top">';
+  html += '<div class="card-id">';
+  html += '<span class="card-model">' + escHtml(p.model) + '</span>';
+  if (p.description) html += '<span class="card-desc">' + escHtml(p.description) + '</span>';
+  html += '</div>';
+  html += '<div class="card-right">';
+  html += '<span class="card-badge ' + (isRecommended ? 'badge-recommended' : 'badge-alternative') + '">' +
+    (isRecommended ? ICONS.star + ' Best Match' : 'Alternative') + '</span>';
+  html += scoreRing(item.matchPct != null ? item.matchPct : 100);
+  html += '</div></div>';
+
+  // Specs
+  html += '<div class="card-specs">';
+  html += specItem(ICONS.ports, 'Ports', escHtml(formatPorts(p)), hlPorts);
+  html += specItem(ICONS.bypass, 'Bypass',
+    bp.supported ? escHtml(bp.groups + ' group' + (bp.groups > 1 ? 's' : '') + (bp.optional ? ' (optional)' : '')) : 'Not available',
+    hlBypass);
+  html += specItem(ICONS.cpu, 'CPU', escHtml(cpu) + (p.cpu_tier ? ' · <span style="color:var(--text-3);font-weight:500">' + escHtml(p.cpu_tier) + '</span>' : ''), hlCpu);
+  html += specItem(ICONS.ram, 'RAM', escHtml(ram), hlRam);
+  html += specItem(ICONS.storage, 'Storage', escHtml(formatStorage(p.storage)));
+  html += specItem(ICONS.form, 'Form Factor', escHtml(formatFormFactor(p.form_factor)), hlForm);
+  if (p.cellular) html += specItem(ICONS.cellular, 'Cellular', escHtml('✓ ' + ((p.cellular && p.cellular.gen) || '4G/5G')), hlCellular);
+  if (p.wifi) html += specItem(ICONS.wifi, 'WiFi', '✓ Supported', hlWifi);
+  if (p.npu_tops) html += specItem(ICONS.npu, 'NPU', escHtml(p.npu_tops + ' TOPS'));
+  if (p.redundant_power) html += specItem(ICONS.power, 'Redundant Power', '✓ Supported');
+  if (p.os_compatibility) html += specItem(ICONS.os, 'OS Support', escHtml(formatOS(p.os_compatibility)));
+  html += '</div>';
+
+  // Reason
+  var reasonParams = effectiveParams || getFilterParams();
+  html += '<div class="card-reason">' + ICONS.spark + '<span><strong>Why this model:</strong> ' + escHtml(generateReasonEN(p, reasonParams)) + '</span></div>';
+
+  // Footer
+  html += '<div class="card-foot">';
+  html += '<span class="card-note">' + ICONS.wrench + ' OEM/ODM available — dev fee credited against future orders</span>';
+  html += '<span class="card-contact">';
+  html += '<a class="contact-btn primary" href="mailto:' + escHtml(CONFIG.email) + '?subject=' + encodeURIComponent('Inquiry: ' + p.model) + '">' + ICONS.mail + ' Email</a>';
+  html += '<button class="contact-btn copy-inquiry" data-model="' + escHtml(p.model) + '" type="button">' + ICONS.copy + ' Copy Inquiry</button>';
+  html += '<a class="contact-btn" href="https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I\'m interested in the ' + p.model + '. Could you provide pricing and lead time?') + '" target="_blank" rel="noopener">' + ICONS.wa + ' WhatsApp</a>';
+  if (isRecommended && CONFIG.linkedin) { html += '<a class="contact-btn" href="' + CONFIG.linkedin + '" target="_blank" rel="noopener">' + ICONS.linkedin + ' LinkedIn</a>'; }
+  html += '</span></div>';
+
+  html += '</article>';
+  return html;
+}
+
+function buildReqChips(params) {
+  var chips = [];
+  if (params.lan) chips.push(params.lan + '+ LAN ports');
+  if (params.lan_speed) chips.push(params.lan_speed + ' speed');
+  if (params.platform) chips.push(params.platform.toUpperCase() + ' platform');
+  if (params.form_factor) chips.push(formatFormFactor(params.form_factor));
+  if (params.bypass) chips.push('Bypass required');
+  if (params.cpu_tier) chips.push(params.cpu_tier.charAt(0).toUpperCase() + params.cpu_tier.slice(1) + ' CPU');
+  if (params.ram_type) chips.push(params.ram_type + ' memory');
+  if (params.requires_cellular) chips.push('4G/5G cellular');
+  if (params.requires_wifi) chips.push('WiFi');
+  if (params.sfp_type) chips.push(params.sfp_type === 'sfp_plus' ? 'SFP+ ports' : 'SFP ports');
+  if (params.sfp_count) chips.push(params.sfp_count + '+ optical ports');
+  var html = '';
+  for (var i = 0; i < chips.length; i++) {
+    html += '<span class="req-chip">' + ICONS.check + escHtml(chips[i]) + '</span>';
+  }
+  return html;
+}
+
+function getInquiryText(model) {
+  var params = getFilterParams();
+  var lines = ['Subject: Inquiry about ' + model, '', 'Hi ' + CONFIG.name + ',', '', 'I\'m interested in the ' + model + ' for our project.', ''];
+
+  var reqs = [];
+  if (params.lan) reqs.push(params.lan + '+ LAN ports');
+  if (params.lan_speed) reqs.push(params.lan_speed + ' speed');
+  if (params.platform) reqs.push(params.platform.toUpperCase() + ' platform');
+  if (params.form_factor) reqs.push(formatFormFactor(params.form_factor));
+  if (params.bypass) reqs.push('Bypass support');
+  if (params.cpu_tier) reqs.push(params.cpu_tier + ' tier CPU');
+  if (params.ram_type) reqs.push(params.ram_type + ' memory');
+  if (params.requires_cellular) reqs.push('4G/5G cellular');
+  if (params.requires_wifi) reqs.push('WiFi support');
+  if (params.sfp_type) reqs.push(params.sfp_type.toUpperCase() + ' ports');
+  if (params.sfp_count) reqs.push(params.sfp_count + '+ optical ports');
+
+  if (reqs.length > 0) {
+    lines.push('Requirements: ' + reqs.join(', '));
+    lines.push('');
+  }
+
+  lines.push('Could you provide pricing and lead time?');
+  lines.push('');
+  lines.push('Best regards');
+  return lines.join('\n');
+}
+
+// ============================================================
+// Results flow
+// ============================================================
+
+function showResults() {
+  var params = getFilterParams();
+  var hint = document.getElementById('filter-hint');
+
+  if (!hasAnyFilter(params)) {
+    hint.textContent = 'Please select at least one requirement above.';
+    hint.classList.remove('hidden');
+    setTimeout(function() { hint.classList.add('hidden'); }, 3000);
+    return;
+  }
+  hint.classList.add('hidden');
+
+  var result = select(params);
+  var section = document.getElementById('section-results');
+  var title = document.getElementById('results-title');
+  var sub = document.getElementById('results-sub');
+  var summary = document.getElementById('req-summary');
+  var notice = document.getElementById('degrade-notice');
+  var container = document.getElementById('results-container');
+
+  section.classList.remove('hidden');
+  summary.innerHTML = buildReqChips(params);
+
+  if (!result.success) {
+    title.textContent = 'No Exact Match';
+    sub.textContent = '';
+    notice.classList.add('hidden');
+
+    var similar = findSimilarProducts(params);
+    var html = '<div class="no-match">' +
+      '<div class="no-match-icon">' + ICONS.search + '</div>' +
+      '<h3>No standard product matches all requirements</h3>' +
+      '<p>We can build it for you — custom configurations are our specialty. Or consider one of the closest alternatives below.</p>' +
+      '<div class="contact-row">' +
+      '<a class="contact-btn primary" href="mailto:' + escHtml(CONFIG.email) + '?subject=' + encodeURIComponent('Custom Solution Inquiry') + '">' + ICONS.mail + ' Discuss Custom Solution</a>' +
+      '<a class="contact-btn" href="https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I need a custom network appliance. Could you help?') + '" target="_blank" rel="noopener">' + ICONS.wa + ' WhatsApp Us</a>' +
+      '</div></div>';
+
+    if (similar.length > 0) {
+      html += '<div class="similar-head"><h3 class="similar-title">Closest Alternatives</h3>' +
+        '<p class="similar-sub">These products partially match your requirements</p></div>';
+      for (var i = 0; i < similar.length; i++) {
+        var s = similar[i];
+        var p = s.product;
+        html += '<article class="product-card">' +
+          '<div class="card-top">' +
+          '<div class="card-id"><span class="card-model">' + escHtml(p.model) + '</span>' +
+          (p.description ? '<span class="card-desc">' + escHtml(p.description) + '</span>' : '') +
+          '</div>' +
+          '<div class="card-right"><span class="match-bar-wrap" title="Partial match">' +
+          '<span class="match-bar"><span class="match-bar-fill" style="width:' + s.matchPercent + '%"></span></span>' +
+          '<span class="match-pct">' + s.matchPercent + '%</span></span></div></div>' +
+          '<div class="card-specs">' +
+          specItem(ICONS.ports, 'Ports', escHtml(formatPorts(p))) +
+          specItem(ICONS.cpu, 'Platform', escHtml((p.platform || '—').toUpperCase())) +
+          specItem(ICONS.form, 'Form Factor', escHtml(formatFormFactor(p.form_factor))) +
+          '</div>' +
+          '<div class="card-foot"><span class="card-note">' + ICONS.info + ' Partial match — ask us about customization</span>' +
+          '<span class="card-contact">' +
+          '<a class="contact-btn primary" href="mailto:' + escHtml(CONFIG.email) + '?subject=' + encodeURIComponent('Inquiry: ' + p.model) + '">' + ICONS.mail + ' Email</a>' +
+          '<a class="contact-btn" href="https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I\'m interested in the ' + p.model + '. Could you provide pricing and lead time?') + '" target="_blank" rel="noopener">' + ICONS.wa + ' WhatsApp</a>' +
+          '</span></div></article>';
+      }
+    }
+    container.innerHTML = html;
+  } else {
+    title.textContent = 'Your Matches';
+    sub.textContent = result.total + ' of ' + PRODUCTS.length + ' models meet your requirements — top ' + (1 + result.alternatives.length) + ' shown';
+
+    if (result.degraded.length > 0) {
+      var msgs = result.degraded.map(function(d) {
+        var fieldNames = { lan: 'port count', lan_speed: 'speed', form_factor: 'form factor', bypass: 'bypass', sfp_type: 'optical port type', sfp_count: 'optical port count', port_types: 'optical port count', storage_type: 'storage type', requires_wifi: 'WiFi', requires_cellular: '4G/5G' };
+        var name = fieldNames[d.field] || d.field;
+        if (d.to == null) return 'showing options without the ' + name + ' requirement';
+        // 端口数降级语义是「≥N口」，速率是「≤某档」，文案方向不能混
+        if (d.field === 'lan') return 'showing options from ' + d.to + ' ports';
+        return 'showing ' + name + ' up to ' + d.to;
+      });
+      notice.innerHTML = ICONS.warn + '<span><strong>Best available matches:</strong> ' + escHtml(msgs.join('; ')) + '. Need the exact spec? We customize.</span>';
+      notice.classList.remove('hidden');
+    } else {
+      notice.classList.add('hidden');
+    }
+
+    var html2 = buildProductCard(result.recommended, true, result.effectiveParams, params);
+    for (var j = 0; j < result.alternatives.length; j++) {
+      html2 += buildProductCard(result.alternatives[j], false, result.effectiveParams, params);
+    }
+    container.innerHTML = html2;
+  }
+
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============================================================
+// Motion & chrome
+// ============================================================
+
+function initReveal() {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el) { el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el) { io.observe(el); });
+}
+
+function animateStat(el, target, prefix, suffix) {
+  var dur = 1400;
+  var start = null;
+  function tick(ts) {
+    if (!start) start = ts;
+    var p = Math.min((ts - start) / dur, 1);
+    var eased = 1 - Math.pow(1 - p, 3);
+    el.innerHTML = prefix + Math.round(target * eased) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function initStats() {
+  var els = document.querySelectorAll('.stat-num');
+  var run = function() {
+    els.forEach(function(el) {
+      animateStat(el, parseInt(el.dataset.count, 10) || 0, el.dataset.prefix || '', el.dataset.suffix || '');
+    });
+  };
+  if (!('IntersectionObserver' in window)) { run(); return; }
+  var fired = false;
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !fired) { fired = true; run(); io.disconnect(); }
+    });
+  }, { threshold: 0.4 });
+  if (els.length) io.observe(els[0].parentElement.parentElement);
+}
+
+function initNav() {
+  var nav = document.getElementById('nav');
+  var onScroll = function() {
+    nav.classList.toggle('scrolled', window.scrollY > 24);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+// ============================================================
+// Init
+// ============================================================
+
+function init() {
+  // Hero model count from real data
+  var modelStat = document.querySelector('[data-count="__PRODUCT_COUNT__"]');
+  if (modelStat) modelStat.dataset.count = PRODUCTS.length;
+
+  // Wire contact links
+  document.getElementById('nav-cta').href = 'https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I\'d like to get a quote for a network appliance.');
+  document.getElementById('hero-wa').href = 'https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I\'d like to discuss hardware requirements with an engineer.');
+  document.getElementById('cta-custom').href = 'https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I\'d like to discuss a custom project.');
+  document.getElementById('cta-sample').href = 'https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I\'d like to request a sample.');
+  document.getElementById('cta-email').href = 'mailto:' + CONFIG.email;
+
+  // Button group clicks
+  document.querySelectorAll('.btn-group').forEach(function(group) {
+    group.addEventListener('click', function(e) {
+      var btn = e.target.closest('.btn-opt');
+      if (!btn) return;
+      group.querySelectorAll('.btn-opt').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      clearScenarioSelection();
+      updateMatchCounter();
+    });
+  });
+
+  // Toggles
+  ['bypass-toggle', 'cellular-toggle', 'wifi-toggle'].forEach(function(id) {
+    document.getElementById(id).addEventListener('change', function() {
+      clearScenarioSelection();
+      updateMatchCounter();
+    });
+  });
+
+  // Scenario cards
+  document.querySelectorAll('.scenario-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var scenario = this.dataset.scenario;
+
+      document.querySelectorAll('.scenario-card').forEach(function(c) { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
+      this.classList.add('active');
+      this.setAttribute('aria-pressed', 'true');
+
+      if (scenario === 'custom') {
+        document.querySelector('.footer').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+
+      applyScenario(scenario);
+      updateMatchCounter();
+      showResults();
+    });
+  });
+
+  // Show results
+  document.getElementById('btn-show').addEventListener('click', showResults);
+
+  // Reset
+  document.getElementById('btn-reset').addEventListener('click', function() {
+    resetFiltersOnly();
+    clearScenarioSelection();
+    updateMatchCounter();
+    document.getElementById('section-results').classList.add('hidden');
+    document.getElementById('filter-hint').classList.add('hidden');
+    document.getElementById('section-filters').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Copy inquiry (delegated)
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.copy-inquiry');
+    if (!btn) return;
+    var text = getInquiryText(btn.dataset.model);
+
+    function markCopied() {
+      btn.innerHTML = ICONS.check + ' Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.innerHTML = ICONS.copy + ' Copy Inquiry';
+        btn.classList.remove('copied');
+      }, 2000);
+    }
+    function fallbackCopy() {
+      var textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        markCopied();
+      } catch (err) {
+        btn.textContent = 'Copy failed';
+        setTimeout(function() { btn.innerHTML = ICONS.copy + ' Copy Inquiry'; }, 2000);
+      }
+      document.body.removeChild(textarea);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(markCopied).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  });
+
+  // Chrome & motion
+  initNav();
+  initReveal();
+  initStats();
+  updateMatchCounter();
+
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+  // LinkedIn 链接未配置时隐藏图标（2026-07-27 处理，见 CONFIG.linkedin TODO）
+  var liLink = document.getElementById('footer-linkedin');
+  if (liLink) {
+    if (CONFIG.linkedin) { liLink.href = CONFIG.linkedin; }
+    else { liLink.style.display = 'none'; }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
