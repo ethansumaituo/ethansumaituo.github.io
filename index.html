@@ -582,7 +582,7 @@ a { color: var(--brand-500); text-decoration: none; }
   border-radius: 99px;
   text-transform: uppercase; letter-spacing: 0.6px;
 }
-.card-badge svg { width: 13px; height: 13px; }
+.card-badge svg { width: 13px; height: 13px; stroke: currentColor; }
 .badge-recommended { background: var(--grad-brand); color: #fff; box-shadow: 0 4px 12px -3px rgba(18, 102, 102, 0.5); }
 .badge-alternative { background: #EAF6F5; color: var(--brand-600); border: 1px solid #D6EEEC; }
 .badge-match { background: #f0fdf4; color: var(--green-600); border: 1px solid #bbf7d0; }
@@ -802,6 +802,42 @@ a { color: var(--brand-500); text-decoration: none; }
   .card-model { font-size: 18px; }
   .optical-row { flex-direction: column; gap: 18px; padding: 16px; }
 }
+/* ===== Model search（导航栏，2026-09-15） ===== */
+.nav-search { position: relative; flex: 0 1 300px; margin: 0 18px; }
+.nav-search input {
+  width: 100%; padding: 9px 36px 9px 38px;
+  font-size: 13px; font-family: inherit; color: #fff;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 99px; transition: all 0.25s var(--ease-out);
+}
+.nav-search input::placeholder { color: rgba(255, 255, 255, 0.45); }
+.nav-search input:focus { outline: none; background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.35); }
+.nav-search .search-ic {
+  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  width: 15px; height: 15px; stroke: rgba(255, 255, 255, 0.55); pointer-events: none;
+}
+@media (max-width: 760px) { .nav-search { display: none; } }  /* 窄屏隐藏：深链 ?model= 直达覆盖移动场景 */
+.nav-search .search-clear {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  width: 20px; height: 20px; border: none; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18); color: rgba(255, 255, 255, 0.7);
+  font-size: 13px; line-height: 1; display: grid; place-items: center;
+}
+.nav-search .search-clear:hover { background: rgba(255, 255, 255, 0.32); color: #fff; }
+.search-dropdown {
+  position: absolute; z-index: 60; top: calc(100% + 6px); left: 0; right: 0;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg); overflow: hidden; min-width: 260px;
+}
+.search-item {
+  display: flex; flex-direction: column; gap: 1px; width: 100%; text-align: left;
+  padding: 10px 14px; background: none; border: none; border-bottom: 1px solid var(--line);
+}
+.search-item:last-of-type { border-bottom: none; }
+.search-item:hover { background: #EAF6F5; }
+.search-item-model { font-family: var(--mono); font-size: 13.5px; font-weight: 700; color: var(--text); }
+.search-item-desc { font-size: 11.5px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-more { padding: 8px 14px; font-size: 11.5px; color: var(--text-3); background: var(--bg); text-align: center; }
 </style>
 </head>
 <body>
@@ -825,6 +861,12 @@ a { color: var(--brand-500); text-decoration: none; }
         <div class="brand-name">Product Finder</div>
         <div class="brand-sub">Network Security Hardware</div>
       </span>
+    </div>
+    <div class="nav-search">
+      <svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="model-search" placeholder="Search model" autocomplete="off" aria-label="Search by model number">
+      <button type="button" class="search-clear hidden" id="search-clear" aria-label="Clear search">&times;</button>
+      <div class="search-dropdown hidden" id="search-dropdown"></div>
     </div>
     <a class="nav-cta" id="nav-cta" href="#" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
@@ -1128,7 +1170,8 @@ var CONFIG = {
   whatsapp: '8619328760552', // with country code, no +
   name: 'Ethan',
   company: 'Shenzhen MAITUO Technology Co., Ltd.',
-  linkedin: 'https://www.linkedin.com/in/ethansumaituo'  // 2026-07-29 填入：Ethan 个人主页（公司页无管理权限，暂挂个人）
+  linkedin: 'https://www.linkedin.com/in/ethansumaituo',  // 2026-07-29 填入：Ethan 个人主页（公司页无管理权限，暂挂个人）
+  site: 'https://ethansumaituo.github.io/'  // Copy Link 深链基址（2026-09-15 型号搜索）
 };
 
 // ============================================================
@@ -1168,7 +1211,8 @@ var ICONS = {
   wrench: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
   cert: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13l1.5 8-5-3-5 3 1.5-8"/></svg>',
   linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>',
-  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>'
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
+  link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
 };
 
 // ============================================================
@@ -1624,6 +1668,59 @@ function findSimilarProducts(params) {
 }
 
 // ============================================================
+// Model search & deep link（2026-09-15：跟进场景型号直达）
+// ============================================================
+
+function normQ(q) { return (q || '').toUpperCase().replace(/\s+/g, ''); }
+
+function searchModels(q) {
+  // 只认型号：子串匹配 + 去横杠匹配（7411 / nsc7411 / NSC-7411 都能命中）
+  q = normQ(q);
+  if (q.length < 2) return [];
+  var qBare = q.replace(/-/g, '');
+  var hits = [];
+  for (var i = 0; i < PRODUCTS.length; i++) {
+    var m = (PRODUCTS[i].model || '').toUpperCase();
+    if (m.indexOf(q) >= 0 || m.replace(/-/g, '').indexOf(qBare) >= 0) hits.push(PRODUCTS[i]);
+  }
+  hits.sort(function(a, b) {
+    var am = a.model.toUpperCase(), bm = b.model.toUpperCase();
+    function rank(m) { return m.indexOf(q) === 0 ? 0 : (m.replace(/^NSC-/, '').indexOf(q) === 0 ? 1 : 2); }
+    return rank(am) - rank(bm) || am.localeCompare(bm);
+  });
+  return hits;
+}
+
+function showProductLookup(matches) {
+  // 型号直达结果：复用结果区渲染，与筛选结果互不干扰
+  var section = document.getElementById('section-results');
+  document.getElementById('results-title').textContent = 'Product Lookup';
+  var sub = document.getElementById('results-sub');
+  document.getElementById('req-summary').innerHTML = '';
+  document.getElementById('degrade-notice').classList.add('hidden');
+  var container = document.getElementById('results-container');
+  section.classList.remove('hidden');
+  if (!matches.length) {
+    sub.textContent = '';
+    container.innerHTML = '<div class="no-match"><div class="no-match-icon">' + ICONS.search + '</div>' +
+      '<h3>No model found</h3><p>Check the model number, or browse with the filters above.</p></div>';
+  } else {
+    sub.textContent = matches.length === 1 ? '1 model found' : matches.length + ' models found';
+    var html = '';
+    for (var i = 0; i < matches.length; i++) html += buildProductCard({ product: matches[i], lookup: true }, false, null, {});
+    container.innerHTML = html;
+  }
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function deepLink(model) {
+  // 深链基址优先用 CONFIG.site（本地 file:// 预览也复制出线上地址）
+  var base = CONFIG.site || (location.origin + location.pathname);
+  if (base.slice(-1) !== '/' && base.slice(-5) !== '.html') base += '/';
+  return base + '?model=' + encodeURIComponent(model);
+}
+
+// ============================================================
 // Formatting helpers
 // ============================================================
 
@@ -1815,9 +1912,14 @@ function buildProductCard(item, isRecommended, effectiveParams, userParams) {
   if (p.description) html += '<span class="card-desc" data-field="desc">' + escHtml(p.description) + '</span>';
   html += '</div>';
   html += '<div class="card-right">';
-  html += '<span class="card-badge ' + (isRecommended ? 'badge-recommended' : 'badge-alternative') + '">' +
-    (isRecommended ? ICONS.star + ' Best Match' : 'Alternative') + '</span>';
-  html += scoreRing(item.matchPct != null ? item.matchPct : 100);
+  if (item.lookup) {
+    // 型号直达卡片：无需求输入，不渲染评分环（显示 100% 会误导）
+    html += '<span class="card-badge badge-match">' + ICONS.search + ' Product Lookup</span>';
+  } else {
+    html += '<span class="card-badge ' + (isRecommended ? 'badge-recommended' : 'badge-alternative') + '">' +
+      (isRecommended ? ICONS.star + ' Best Match' : 'Alternative') + '</span>';
+    html += scoreRing(item.matchPct != null ? item.matchPct : 100);
+  }
   html += '</div></div>';
 
   // Specs
@@ -1844,10 +1946,8 @@ function buildProductCard(item, isRecommended, effectiveParams, userParams) {
   if (p.os_compatibility) html += specItem(ICONS.os, 'OS Support', escHtml(formatOS(p.os_compatibility)), '', 'os');
   if (p.temp_range) html += specItem(ICONS.form, 'Operating Temp', escHtml(p.temp_range), '', 'temp');
   if (p.certifications) {
-    var certs = Object.keys(p.certifications).filter(function(k) {
-      return p.certifications[k] === 'certified';
-    }).map(function(k) { return k.toUpperCase(); });
-    if (certs.length) html += specItem(ICONS.check || ICONS.os, 'Certifications', escHtml(certs.join(' / ')), '', 'cert');
+    // 2026-09-07 认证口径整改（Nozomi 作战卡 H1）：展示统一为 designed-to/per-program，不印 certified
+    html += specItem(ICONS.check || ICONS.os, 'Certifications', escHtml('Designed to FCC / CE standards — formal certification handled per program'), '', 'cert');
   }
   if (p.poe) {
     var poeText = p.poe.standard || 'PoE';
@@ -1886,6 +1986,7 @@ function buildProductCard(item, isRecommended, effectiveParams, userParams) {
   html += '<span class="card-contact">';
   html += '<a class="contact-btn primary" href="mailto:' + escHtml(CONFIG.email) + '?subject=' + encodeURIComponent('Inquiry: ' + p.model) + '">' + ICONS.mail + ' Email</a>';
   html += '<button class="contact-btn copy-inquiry" data-model="' + escHtml(p.model) + '" type="button">' + ICONS.copy + ' Copy Inquiry</button>';
+  html += '<button class="contact-btn copy-link" data-model="' + escHtml(p.model) + '" type="button" title="Copy a direct link to this model">' + ICONS.link + ' Copy Link</button>';
   html += '<a class="contact-btn" href="https://api.whatsapp.com/send?phone=' + CONFIG.whatsapp + '&text=' + encodeURIComponent('Hi, I\'m interested in the ' + p.model + '. Could you provide pricing and lead time?') + '" target="_blank" rel="noopener">' + ICONS.wa + ' WhatsApp</a>';
   if (isRecommended && CONFIG.linkedin) { html += '<a class="contact-btn" href="' + CONFIG.linkedin + '" target="_blank" rel="noopener">' + ICONS.linkedin + ' LinkedIn</a>'; }
   html += '</span></div>';
@@ -2243,6 +2344,70 @@ function init() {
       fallbackCopy();
     }
   });
+
+  // Model search (nav)
+  var searchInput = document.getElementById('model-search');
+  var searchDd = document.getElementById('search-dropdown');
+  if (searchInput && searchDd) {
+    var hideDd = function() { searchDd.classList.add('hidden'); };
+    var clearBtn = document.getElementById('search-clear');
+    var syncClear = function() { if (clearBtn) clearBtn.classList.toggle('hidden', !searchInput.value); };
+    if (clearBtn) clearBtn.addEventListener('click', function() { searchInput.value = ''; hideDd(); syncClear(); searchInput.focus(); });
+    searchInput.addEventListener('input', function() {
+      syncClear();
+      var hits = searchModels(this.value);
+      if (!this.value.trim() || !hits.length) { hideDd(); return; }
+      var html = '';
+      for (var i = 0; i < Math.min(6, hits.length); i++) {
+        html += '<button type="button" class="search-item" data-model="' + escHtml(hits[i].model) + '">' +
+          '<span class="search-item-model">' + escHtml(hits[i].model) + '</span>' +
+          '<span class="search-item-desc">' + escHtml((hits[i].description || '').slice(0, 60)) + '</span></button>';
+      }
+      if (hits.length > 6) html += '<div class="search-more">' + (hits.length - 6) + ' more — press Enter to view</div>';
+      searchDd.innerHTML = html;
+      searchDd.classList.remove('hidden');
+    });
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { hideDd(); this.blur(); }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (!this.value.trim()) { hideDd(); return; }
+        showProductLookup(searchModels(this.value).slice(0, 6));
+        hideDd();
+      }
+    });
+    searchInput.addEventListener('blur', function() { setTimeout(hideDd, 150); });  // 延迟收起，让下拉点击先生效
+    searchInput.addEventListener('focus', function() { if (searchDd.innerHTML && this.value.trim()) searchDd.classList.remove('hidden'); });
+    searchDd.addEventListener('click', function(e) {
+      var btn = e.target.closest('.search-item');
+      if (!btn) return;
+      var hit = PRODUCTS.filter(function(p) { return p.model === btn.dataset.model; });
+      searchInput.value = btn.dataset.model;
+      hideDd();
+      showProductLookup(hit);
+    });
+  }
+
+  // Copy Link: 型号直达深链（delegated，Ethan 发邮件取链 / 客户内部转发用）
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.copy-link');
+    if (!btn) return;
+    var url = deepLink(btn.dataset.model);
+    var done = function() {
+      btn.innerHTML = ICONS.check + ' Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.innerHTML = ICONS.link + ' Copy Link'; btn.classList.remove('copied'); }, 2000);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(done, done); } else { done(); }
+  });
+
+  // ?model= 深链：打开页面自动定位到型号卡片
+  var qm = new URLSearchParams(location.search).get('model');
+  if (qm) {
+    var hits = searchModels(qm);
+    var exact = hits.filter(function(p) { return p.model.toUpperCase() === normQ(qm); });
+    if (exact.length || hits.length) showProductLookup(exact.length ? exact : hits.slice(0, 1));
+  }
 
   // Chrome & motion
   initNav();
